@@ -1,0 +1,4 @@
+obj/
+.vscode/
+lightspace
+compile_flags.txt

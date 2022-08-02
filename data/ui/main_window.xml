@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <object id="mainWindow" class="GtkWindow">
+        <property name="title" translatable="1">Lightspace</property>
+        <property name="width-request">800</property>
+        <property name="height-request">600</property>
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>                    <!-- Toolbar-->
+                    <object class="GtkBox">
+                        <property name="css-classes">toolbar</property>
+                        <child>
+                            <object class="GtkImage">
+                                <property name="width-request">32</property>
+                                <property name="height-request">32</property>
+                                <property name="margin-start">6</property>
+                                <property name="icon-name">applications-graphics</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="logoText">
+                                <property name="label" translatable="1">Lightspace</property>
+                                <property name="margin-start">2</property>
+                                <property name="name">logo-text</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSeparator">
+                                <property name="margin-start">18</property>
+                                <property name="margin-end">8</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton">
+                                <property name="label" translatable="1">Import</property>
+                                <property name="tooltip-text" translatable="1">Import new files</property>
+                                <property name="icon-name">document-open</property>
+                                <property name="action-name">app.open_image</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton">
+                                <property name="label" translatable="1">Save</property>
+                                <property name="tooltip-text" translatable="1">Save picture</property>
+                                <property name="icon-name">document-save</property>
+                                <property name="action-name">app.save_image</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>                    <!-- Image and Sidepanel-->
+                    <object class="GtkPaned">
+                        <property name="position">300</property>
+                        <property name="width-request">300</property>
+                        <property name="hexpand">1</property>
+                        <property name="vexpand">1</property>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="margin-bottom">6</property>
+                                <property name="margin-start">6</property>
+                                <property name="margin-end">6</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                    <object class="GtkFrame">
+                                        <property name="margin-bottom">6</property>
+                                        <child type="label">
+                                            <object class="GtkLabel">
+                                                <property name="label">Effects</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkTextView" id="textView">
+                                                <property name="vexpand">1</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="GtkBox">
+                                        <child>
+                                            <object class="GtkButton">
+                                                <property name="label">Apply</property>
+                                                <property name="margin-end">3</property>
+                                                <property name="hexpand">1</property>
+                                                <property name="action-name">app.apply_effects</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkButton">
+                                                <property name="label">Load</property>
+                                                <property name="margin-start">6</property>
+                                                <property name="margin-end">6</property>
+                                                <property name="hexpand">1</property>
+                                                <property name="action-name">app.load_preset</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkButton">
+                                                <property name="label">Save</property>
+                                                <property name="margin-start">3</property>
+                                                <property name="hexpand">1</property>
+                                                <property name="action-name">app.save_preset</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkPicture" id="imageView">
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </object>
+</interface>

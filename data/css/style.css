@@ -1,0 +1,13 @@
+textview {
+    padding: 8px;
+    font-size: 12px;
+}
+
+#logo-text {
+    font-weight: bold;
+}
+
+button,
+frame {
+    border-radius: 0;
+}
