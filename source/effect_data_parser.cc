@@ -35,5 +35,11 @@ void parse_effect_data()
         
         else if (effectName.lowercase() == "contrast")
             apply_contrast(string_to_double(effectValue));
+        
+        else if (effectName.lowercase() == "saturation")
+            apply_saturation(string_to_double(effectValue));
+        
+        else if (effectName.lowercase() == "grayscale")
+            apply_grayscale(string_to_bool(effectValue));
     }
 }

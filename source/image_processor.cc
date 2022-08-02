@@ -28,11 +28,8 @@ void ImageProcessor::set_original_pixbuf(Glib::RefPtr<Gdk::Pixbuf> pixbuf)
 {
     this->originalPixbuf = pixbuf;
 
-    if (this->pixbuf == nullptr)
-    {
-        restore_to_original_pixbuf();
-        this->imageView->set_pixbuf(this->pixbuf);
-    }
+    restore_to_original_pixbuf();
+    this->imageView->set_pixbuf(this->pixbuf);
 }
 
 void ImageProcessor::restore_to_original_pixbuf()

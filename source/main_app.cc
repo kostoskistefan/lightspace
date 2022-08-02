@@ -1,6 +1,7 @@
 #include "main_app.h"
 #include "ui_builder.h"
 #include "app_actions.h"
+#include "image_processor.h"
 #include <gtkmm/cssprovider.h>
 
 MainApplication::MainApplication()
@@ -35,7 +36,7 @@ void MainApplication::on_activate()
 {
     window = static_cast<Gtk::Window *>(
         UIBuilder::get_instance().get_widget_from_id("mainWindow"));
-
+    
     load_css(window);
     load_dark_theme();
     create_action_map(this);

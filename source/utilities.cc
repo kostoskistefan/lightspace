@@ -69,14 +69,14 @@ bool string_to_bool(const Glib::ustring &str)
 {
     bool value = false;
 
-    if (str == "True")
+    if (str.lowercase() == "true")
         value = true;
 
-    else if (str == "False")
+    else if (str.lowercase() == "false")
         value = false;
 
     else 
-        fprintf(stderr, "Cannot convert the string: '%s' to bool", str);
+        fprintf(stderr, "Cannot convert the string: '%s' to bool\n", str);
 
     return value;
 }
