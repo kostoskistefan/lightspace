@@ -39,7 +39,8 @@ void MainApplication::on_activate()
     
     load_css(window);
     load_dark_theme();
-    create_action_map(this);
+    
+    AppActions::get_instance().initialize(this, window);
 
     add_window(*window);
     window->maximize();

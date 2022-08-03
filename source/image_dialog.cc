@@ -2,19 +2,29 @@
 #include "image_processor.h"
 #include "ui_builder.h"
 
-ImageDialog::ImageDialog(Gtk::Window *parent, std::string title, Gtk::FileChooser::Action action)
+ImageDialog::ImageDialog()
 {
-    std::string buttonText = "Open";
-
-    if (action == Gtk::FileChooser::Action::SAVE)
-        buttonText = "Save";
-
-    dialog = Gtk::FileChooserNative::create(title, *parent, action, buttonText, "Cancel");
+    dialog = Gtk::FileChooserNative::create("", Gtk::FileChooser::Action::OPEN, "", "Cancel");
     dialog->set_modal(true);
     add_dialog_file_filter();
 }
 
-ImageDialog::~ImageDialog(){}
+ImageDialog::~ImageDialog() {}
+
+void ImageDialog::set_parent(Gtk::Window *parent)
+{
+    this->dialog->set_transient_for(*parent);
+}
+
+void ImageDialog::set_title(std::string title)
+{
+    this->dialog->set_title(title);
+}
+
+void ImageDialog::set_action(Gtk::FileChooser::Action action)
+{
+    this->dialog->set_action(action);
+}
 
 void ImageDialog::add_dialog_file_filter()
 {
@@ -34,7 +44,7 @@ void ImageDialog::open_image()
     dialog->show();
 }
 
-void ImageDialog::save_image()
+void ImageDialog::export_image()
 {
     dialog->set_current_name("untitled.png");
 

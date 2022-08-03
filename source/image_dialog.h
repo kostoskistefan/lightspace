@@ -6,15 +6,15 @@
 class ImageDialog
 {
 public:
-    ImageDialog(
-        Gtk::Window *parent, 
-        std::string title, 
-        Gtk::FileChooser::Action action);
-        
+    ImageDialog();
     ~ImageDialog();
+
+    void set_parent(Gtk::Window *parent);
+    void set_title(std::string title);
+    void set_action(Gtk::FileChooser::Action action);
     
     void open_image();
-    void save_image();
+    void export_image();
 
 private:
     Glib::RefPtr<Gtk::FileChooserNative> dialog;

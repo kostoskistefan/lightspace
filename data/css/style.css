@@ -11,3 +11,8 @@ button,
 frame {
     border-radius: 0;
 }
+
+#image-box {
+    border-top: 1px solid #222;
+    padding: 6px;
+}

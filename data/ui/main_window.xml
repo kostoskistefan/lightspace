@@ -9,42 +9,77 @@
                 <property name="orientation">vertical</property>
                 <child>                    <!-- Toolbar-->
                     <object class="GtkBox">
-                        <property name="css-classes">toolbar</property>
                         <child>
-                            <object class="GtkImage">
-                                <property name="width-request">32</property>
-                                <property name="height-request">32</property>
-                                <property name="margin-start">6</property>
-                                <property name="icon-name">applications-graphics</property>
+                            <object class="GtkBox">
+                                <property name="css-classes">toolbar</property>
+                                <child>
+                                    <object class="GtkImage">
+                                        <property name="width-request">32</property>
+                                        <property name="height-request">32</property>
+                                        <property name="margin-start">6</property>
+                                        <property name="icon-name">applications-graphics</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="logoText">
+                                        <property name="label" translatable="1">Lightspace</property>
+                                        <property name="margin-start">2</property>
+                                        <property name="name">logo-text</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkSeparator">
+                                        <property name="margin-start">18</property>
+                                        <property name="margin-end">8</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton">
+                                        <property name="label" translatable="1">Import</property>
+                                        <property name="tooltip-text" translatable="1">Import new files</property>
+                                        <property name="icon-name">document-open</property>
+                                        <property name="action-name">app.open_image</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="saveProjectButton">
+                                        <property name="label" translatable="1">Save</property>
+                                        <property name="tooltip-text" translatable="1">Save project</property>
+                                        <property name="icon-name">document-save</property>
+                                        <property name="action-name">app.save_project</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="exportImageButton">
+                                        <property name="label" translatable="1">Export</property>
+                                        <property name="tooltip-text" translatable="1">Export image</property>
+                                        <property name="icon-name">send-to</property>
+                                        <property name="action-name">app.export_image</property>
+                                    </object>
+                                </child>
                             </object>
                         </child>
                         <child>
-                            <object class="GtkLabel" id="logoText">
-                                <property name="label" translatable="1">Lightspace</property>
-                                <property name="margin-start">2</property>
-                                <property name="name">logo-text</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkSeparator">
-                                <property name="margin-start">18</property>
-                                <property name="margin-end">8</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkButton">
-                                <property name="label" translatable="1">Import</property>
-                                <property name="tooltip-text" translatable="1">Import new files</property>
-                                <property name="icon-name">document-open</property>
-                                <property name="action-name">app.open_image</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkButton">
-                                <property name="label" translatable="1">Save</property>
-                                <property name="tooltip-text" translatable="1">Save picture</property>
-                                <property name="icon-name">document-save</property>
-                                <property name="action-name">app.save_image</property>
+                            <object class="GtkBox">
+                                <property name="css-classes">toolbar</property>
+                                <property name="hexpand">True</property>
+                                <property name="halign">end</property>
+                                <child>
+                                    <object class="GtkToggleButton" id="beforeAfterToggleButton">
+                                        <property name="label" translatable="1">Toggle Before/After</property>
+                                        <property name="tooltip-text" translatable="1">Toggle Before/After</property>
+                                        <property name="action-name">app.toggle_before_after</property>
+                                        <property name="icon-name">view-mirror</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkToggleButton" id="dualViewToggleButton">
+                                        <property name="label" translatable="1">Toggle dual view</property>
+                                        <property name="tooltip-text" translatable="1">Toggle dual view</property>
+                                        <property name="action-name">app.toggle_dual_view</property>
+                                        <property name="icon-name">view-dual</property>
+                                    </object>
+                                </child>
                             </object>
                         </child>
                     </object>
@@ -109,7 +144,45 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkPicture" id="imageView">
+                            <object class="GtkBox">
+                                <property name="name">image-box</property>
+                                <property name="hexpand">True</property>
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                            <object class="GtkLabel" id="beforeLabel">
+                                                <property name="label" translatable="1">Before</property>
+                                                <property name="visible">False</property>
+                                                <property name="margin-bottom">6</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkPicture" id="originalImageView">
+                                                <property name="vexpand">True</property>
+                                                <property name="hexpand">True</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                            <object class="GtkLabel" id="afterLabel">
+                                                <property name="label" translatable="1">After</property>
+                                                <property name="visible">False</property>
+                                                <property name="margin-bottom">6</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkPicture" id="imageView">
+                                                <property name="vexpand">True</property>
+                                                <property name="hexpand">True</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
                             </object>
                         </child>
                     </object>
