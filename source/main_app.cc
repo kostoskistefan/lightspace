@@ -1,6 +1,7 @@
 #include "main_app.h"
 #include "ui_builder.h"
 #include "app_actions.h"
+#include "signal_handler.h"
 #include "image_processor.h"
 #include <gtkmm/cssprovider.h>
 
@@ -35,12 +36,13 @@ void load_dark_theme()
 void MainApplication::on_activate()
 {
     window = UIBuilder::get_instance()
-                 .get_widget_from_id<Gtk::Window>("mainWindow");
+                 .get_widget<Gtk::Window>("appWindow");
 
     load_css(window);
     load_dark_theme();
 
-    AppActions::get_instance().initialize(this, window);
+    AppActions::get_instance().create_action_map(window);
+    SignalHandler::get_instance();
 
     add_window(*window);
     window->maximize();

@@ -9,7 +9,12 @@ public:
     static UIBuilder &get_instance();
 
     template <typename T>
-    T *get_widget_from_id(const char *id);
+    T *get_widget(const char *id)
+    {
+        // Must be implemented in the header file, since c++ doesn't support
+        // template methods to be separated in the header file and the cpp file.
+        return this->builder->get_widget<T>(id);
+    }
 
 private:
     UIBuilder();

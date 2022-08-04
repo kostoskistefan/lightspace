@@ -6,7 +6,7 @@
 void parse_effect_data()
 {
     auto textView = UIBuilder::get_instance()
-                        .get_widget_from_id<Gtk::TextView>("textView");
+                        .get_widget<Gtk::TextView>("textView");
 
     auto text = textView->get_buffer()->get_text();
 

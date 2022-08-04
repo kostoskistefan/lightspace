@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <object id="mainWindow" class="GtkWindow">
+    <object id="appWindow" class="GtkWindow">
         <property name="title" translatable="1">Lightspace</property>
         <property name="width-request">800</property>
         <property name="height-request">600</property>
@@ -117,7 +117,7 @@
                                         <child>
                                             <object class="GtkButton" id="applyEffectsButton">
                                                 <property name="label">Apply</property>
-                                                <property name="sensitive">0</property>
+                                                <property name="sensitive">False</property>
                                                 <property name="margin-end">3</property>
                                                 <property name="hexpand">1</property>
                                                 <property name="action-name">app.apply_effects</property>
