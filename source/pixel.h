@@ -3,12 +3,12 @@
 
 #include <gtkmm.h>
 
-typedef struct Pixel {
+typedef struct pixel_ref {
     guint8 *r;
     guint8 *g;
     guint8 *b;
-    Pixel(guchar *pixel);
+    pixel_ref(guchar *pixel);
     void operator=(guint8 value);
-} Pixel;
+} pixel_ref_t;
 
 #endif // PIXEL_H

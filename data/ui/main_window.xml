@@ -150,6 +150,7 @@
                                 <child>
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
+                                        <property name="margin-end">3</property>
                                         <child>
                                             <object class="GtkLabel" id="beforeLabel">
                                                 <property name="label" translatable="1">Before</property>
@@ -168,6 +169,7 @@
                                 <child>
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
+                                        <property name="margin-start">3</property>
                                         <child>
                                             <object class="GtkLabel" id="afterLabel">
                                                 <property name="label" translatable="1">After</property>

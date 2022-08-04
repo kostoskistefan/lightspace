@@ -1,106 +1,187 @@
 #include "color_space.h"
 
-RgbColor::RgbColor() {}
-RgbColor::RgbColor(guint8 r, guint8 g, guint8 b)
+/**
+ * Create a rgb_color_t object with all fields set to 0
+ * @brief Default constructor
+ * @see rgb_color_t(guint8 value)
+ * @see rgb_color_t(guint8 r, guint8 g, guint8 b)
+ */
+rgb_color::rgb_color()
+{
+    this->r = 0;
+    this->g = 0;
+    this->b = 0;
+}
+
+/**
+ * Create a rgb_color_t object with all fields set to the given value
+ * @brief Constructor
+ * @param value The value to set all fields to
+ * @see rgb_color_t()
+ * @see rgb_color_t(guint8 r, guint8 g, guint8 b)
+ */
+rgb_color::rgb_color(guint8 value)
+{
+    this->r = value;
+    this->g = value;
+    this->b = value;
+}
+
+/**
+ * Create a rgb_color_t object from red, green and blue values
+ * @brief Constructor
+ * @see rgb_color_t()
+ * @see rgb_color_t(guint8 value)
+ */
+rgb_color::rgb_color(guint8 r, guint8 g, guint8 b)
 {
     this->r = r;
     this->g = g;
     this->b = b;
 }
 
-HsvColor::HsvColor() {}
-HsvColor::HsvColor(double h, double s, double v)
+/**
+ * Create a hsb_color_t object with all fields set to 0
+ * @brief Default constructor
+ * @see hsb_color_t(double value)
+ * @see hsb_color_t(double h, double s, double v)
+ */
+hsb_color::hsb_color()
+{
+    this->h = 0;
+    this->s = 0;
+    this->b = 0;
+}
+
+/**
+ * Create a hsb_color_t object with all fields set to the given value
+ * @brief Constructor
+ * @param value The value to set all fields to
+ * @see hsb_color_t()
+ * @see hsb_color_t(double h, double s, double v)
+ */
+hsb_color::hsb_color(double value)
+{
+    this->h = value;
+    this->s = value;
+    this->b = value;
+}
+
+/**
+ * Create a hsb_color_t object from hue, saturation and brightness values
+ * @brief Constructor
+ * @see hsb_color_t()
+ * @see hsb_color_t(double value)
+ */
+hsb_color::hsb_color(double h, double s, double b)
 {
     this->h = h;
     this->s = s;
-    this->v = v;
+    this->b = b;
 }
 
-RgbColor hsv_to_rgb(HsvColor hsvColor)
+/**
+ *  @brief Convert an HSB color to an RGB color.
+ *  @param hsbColor The HSB color to convert. Values are in the range [0.00, 1.00].
+ *  @return The converted RGB color object.
+ */
+rgb_color_t hsb_to_rgb(hsb_color_t hsbColor)
 {
-    double c = hsvColor.v * hsvColor.s;
-    double x = c * (1 - fabs(fmod(hsvColor.h / 60.0, 2) - 1));
-    double m = hsvColor.v - c;
-    
-    double r, g, b;
-    
-    if (hsvColor.h >= 0 && hsvColor.h < 60)
+    if (hsbColor.s == 0)
+        return rgb_color_t(hsbColor.b * 255);
+
+    rgb_color_t rgbColor;
+
+    hsbColor.h = hsbColor.h - floor(hsbColor.h);
+
+    int i = floor(hsbColor.h * 6);
+
+    float f = hsbColor.h * 6 - i;
+    float p = hsbColor.b * (1 - hsbColor.s);
+    float q = hsbColor.b * (1 - f * hsbColor.s);
+    float t = hsbColor.b * (1 - (1 - f) * hsbColor.s);
+
+    p *= 255;
+    q *= 255;
+    t *= 255;
+    hsbColor.b *= 255;
+
+    switch (i)
     {
-        r = c;
-        g = x;
-        b = 0;
+    case 0:
+        rgbColor.r = hsbColor.b;
+        rgbColor.g = t;
+        rgbColor.b = p;
+        break;
+    case 1:
+        rgbColor.r = q;
+        rgbColor.g = hsbColor.b;
+        rgbColor.b = p;
+        break;
+    case 2:
+        rgbColor.r = p;
+        rgbColor.g = hsbColor.b;
+        rgbColor.b = t;
+        break;
+    case 3:
+        rgbColor.r = p;
+        rgbColor.g = q;
+        rgbColor.b = hsbColor.b;
+        break;
+    case 4:
+        rgbColor.r = t;
+        rgbColor.g = p;
+        rgbColor.b = hsbColor.b;
+        break;
+    case 5:
+        rgbColor.r = hsbColor.b;
+        rgbColor.g = p;
+        rgbColor.b = q;
+        break;
     }
-    else if (hsvColor.h >= 60 && hsvColor.h < 120)
-    {
-        r = x;
-        g = c;
-        b = 0;
-    }
-    else if (hsvColor.h >= 120 && hsvColor.h < 180)
-    {
-        r = 0;
-        g = c;
-        b = x;
-    }
-    else if (hsvColor.h >= 180 && hsvColor.h < 240)
-    {
-        r = 0;
-        g = x;
-        b = c;
-    }
-    else if (hsvColor.h >= 240 && hsvColor.h < 300)
-    {
-        r = x;
-        g = 0;
-        b = c;
-    }
-    else if (hsvColor.h >= 300 && hsvColor.h < 360)
-    {
-        r = c;
-        g = 0;
-        b = x;
-    }
-    
-    return RgbColor(
-        (r + m) * 255,
-        (g + m) * 255,
-        (b + m) * 255);
+
+    return rgbColor;
 }
 
-HsvColor rgb_to_hsv(RgbColor rgbColor)
+/**
+ *  @brief Convert an RGB color to an HSB color.
+ *  @param rgbColor The RGB color to convert. Values are in the range [0, 255].
+ *  @return The converted HSB color object.
+ */
+hsb_color_t rgb_to_hsb(rgb_color_t rgbColor)
 {
-    double r = rgbColor.r / 255.0;
-    double g = rgbColor.g / 255.0;
-    double b = rgbColor.b / 255.0;
-    
-    double min = MIN(r, MIN(g, b));
-    double max = MAX(r, MAX(g, b));
-    double delta = max - min;
-    
-    double h = 0;
-    double s = 0;
-    double v = max;
-    
-    if (delta == 0)
-    {
-        h = 0;
-        s = 0;
-    }
+    hsb_color_t hsbColor;
+
+    int min = MIN(rgbColor.r, MIN(rgbColor.g, rgbColor.b));
+    int max = MAX(rgbColor.r, MAX(rgbColor.g, rgbColor.b));
+
+    hsbColor.b = max / 255.0f;
+
+    if (max == 0)
+        hsbColor.s = 0;
+
+    else
+        hsbColor.s = ((float)(max - min)) / ((float)max);
+
+    if (hsbColor.s == 0)
+        hsbColor.h = 0;
+
     else
     {
-        s = delta / max;
-        
-        if (r == max)
-            h = (g - b) / delta;
-        else if (g == max)
-            h = 2 + (b - r) / delta;
-        else if (b == max)
-            h = 4 + (r - g) / delta;
-        
-        h *= 60;
-        if (h < 0)
-            h += 360;
+        float delta = (max - min) * 6;
+
+        if (rgbColor.r == max)
+            hsbColor.h = (rgbColor.g - rgbColor.b) / delta;
+
+        else if (rgbColor.g == max)
+            hsbColor.h = 1.0f / 3 + (rgbColor.b - rgbColor.r) / delta;
+
+        else
+            hsbColor.h = 2.0f / 3 + (rgbColor.r - rgbColor.g) / delta;
+
+        if (hsbColor.h < 0)
+            hsbColor.h++;
     }
-    
-    return HsvColor(h, s, v);
+
+    return hsbColor;
 }

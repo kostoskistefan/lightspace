@@ -3,23 +3,25 @@
 
 #include <gtkmm.h>
 
-typedef struct RgbColor {
+typedef struct rgb_color {
     guint8 r;
     guint8 g;
     guint8 b;
-    RgbColor();
-    RgbColor(guint8 r, guint8 g, guint8 b);
-} RgbColor;
+    rgb_color();
+    rgb_color(guint8 value);
+    rgb_color(guint8 r, guint8 g, guint8 b);
+} rgb_color_t;
 
-typedef struct HsvColor {
+typedef struct hsb_color {
     double h;
     double s;
-    double v;
-    HsvColor();
-    HsvColor(double h, double s, double v);
-} HsvColor;
+    double b;
+    hsb_color();
+    hsb_color(double value);
+    hsb_color(double h, double s, double b);
+} hsb_color_t;
 
-RgbColor hsv_to_rgb(HsvColor hsvColor);
-HsvColor rgb_to_hsv(RgbColor rgbColor);
+rgb_color_t hsb_to_rgb(hsb_color_t hsbColor);
+hsb_color_t rgb_to_hsb(rgb_color_t rgbColor);
 
 #endif

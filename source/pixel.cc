@@ -1,13 +1,13 @@
 #include "pixel.h"
 
-Pixel::Pixel(guchar *pixel)
+pixel_ref::pixel_ref(guchar *pixel)
 {
     this->r = &pixel[0];
     this->g = &pixel[1];
     this->b = &pixel[2];
 }
 
-void Pixel::operator=(guint8 value)
+void pixel_ref::operator=(guint8 value)
 {
     *this->r = value;
     *this->g = value;

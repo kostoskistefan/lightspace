@@ -6,8 +6,7 @@
 void parse_effect_data()
 {
     auto textView = static_cast<Gtk::TextView *>(
-        UIBuilder::get_instance().get_widget_from_id("textView")
-    );
+        UIBuilder::get_instance().get_widget_from_id("textView"));
 
     auto text = textView->get_buffer()->get_text();
 
@@ -15,31 +14,31 @@ void parse_effect_data()
     {
         auto tokens = split(line, '=');
 
-        if (tokens.size() != 2) 
+        if (tokens.size() != 2)
             continue;
 
-        auto effectName = tokens[0];
-        auto effectValue = tokens[1];
+        auto name = tokens[0].lowercase();
+        auto value = tokens[1].lowercase();
 
-        trim(effectName);
-        trim(effectValue);
+        trim(name);
+        trim(value);
 
-        if (effectName.lowercase() == "temperature")
-            apply_temperature(string_to_double(effectValue));
-        
-        else if (effectName.lowercase() == "tint")
-            apply_tint(string_to_double(effectValue));
-        
-        else if (effectName.lowercase() == "exposure")
-            apply_exposure(string_to_double(effectValue));
-        
-        else if (effectName.lowercase() == "contrast")
-            apply_contrast(string_to_double(effectValue));
-        
-        else if (effectName.lowercase() == "saturation")
-            apply_saturation(string_to_double(effectValue));
-        
-        else if (effectName.lowercase() == "grayscale")
-            apply_grayscale(string_to_bool(effectValue));
+        if (name == "temperature")
+            apply_temperature(CLAMP(string_to_double(value), -100, 100));
+
+        else if (name == "tint")
+            apply_tint(CLAMP(string_to_double(value), -100, 100));
+
+        else if (name == "exposure")
+            apply_exposure(CLAMP(string_to_double(value), -2.0f, 2.0f));
+
+        else if (name == "contrast")
+            apply_contrast(CLAMP(string_to_double(value), -100, 100));
+
+        else if (name == "saturation")
+            apply_saturation(CLAMP(string_to_double(value), 0, 2.0f));
+
+        else if (name == "grayscale")
+            apply_grayscale(string_to_bool(value));
     }
 }
