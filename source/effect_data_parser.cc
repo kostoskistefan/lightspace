@@ -5,10 +5,12 @@
 
 void parse_effect_data()
 {
-    auto textView = static_cast<Gtk::TextView *>(
-        UIBuilder::get_instance().get_widget_from_id("textView"));
+    auto textView = UIBuilder::get_instance()
+                        .get_widget_from_id<Gtk::TextView>("textView");
 
     auto text = textView->get_buffer()->get_text();
+
+    g_return_if_fail(!text.empty());
 
     for (auto line : split(text, '\n'))
     {

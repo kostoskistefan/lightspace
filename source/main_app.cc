@@ -21,25 +21,25 @@ void load_css(Gtk::Window *window)
 
     window->get_style_context()->add_provider_for_display(
         window->get_display(),
-        provider, 
+        provider,
         GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
 
 void load_dark_theme()
 {
     Gtk::Settings::get_default()->set_property(
-        "gtk-application-prefer-dark-theme", 
+        "gtk-application-prefer-dark-theme",
         true);
 }
 
 void MainApplication::on_activate()
 {
-    window = static_cast<Gtk::Window *>(
-        UIBuilder::get_instance().get_widget_from_id("mainWindow"));
-    
+    window = UIBuilder::get_instance()
+                 .get_widget_from_id<Gtk::Window>("mainWindow");
+
     load_css(window);
     load_dark_theme();
-    
+
     AppActions::get_instance().initialize(this, window);
 
     add_window(*window);
@@ -51,4 +51,3 @@ void on_hide_window(Gtk::Window *window)
 {
     delete window;
 }
-

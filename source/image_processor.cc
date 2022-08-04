@@ -10,11 +10,11 @@ ImageProcessor &ImageProcessor::get_instance()
 
 ImageProcessor::ImageProcessor()
 {
-    this->imageView = static_cast<Gtk::Picture *>(
-        UIBuilder::get_instance().get_widget_from_id("imageView"));
-    
-    this->originalImageView = static_cast<Gtk::Picture *>(
-        UIBuilder::get_instance().get_widget_from_id("originalImageView"));
+    this->imageView = UIBuilder::get_instance()
+                          .get_widget_from_id<Gtk::Picture>("imageView");
+
+    this->originalImageView = UIBuilder::get_instance()
+                                  .get_widget_from_id<Gtk::Picture>("originalImageView");
 
     is_original_image_shown = false;
 }
@@ -43,17 +43,16 @@ void ImageProcessor::toggle_before_after()
 {
     if (this->originalImageView->get_visible())
         return;
-        
+
     if (is_original_image_shown)
         this->imageView->set_pixbuf(this->pixbuf);
-    
-    else 
+
+    else
         this->imageView->set_pixbuf(this->originalPixbuf);
 
-    static_cast<Gtk::ToggleButton *>(
-            UIBuilder::get_instance()
-            .get_widget_from_id("beforeAfterToggleButton"))->
-                set_active(!is_original_image_shown);
+    UIBuilder::get_instance()
+        .get_widget_from_id<Gtk::ToggleButton>("beforeAfterToggleButton")
+        ->set_active(!is_original_image_shown);
 
     is_original_image_shown = !is_original_image_shown;
 }
@@ -61,32 +60,34 @@ void ImageProcessor::toggle_before_after()
 void ImageProcessor::toggle_dual_view()
 {
     this->originalImageView->set_visible(
-        !this->originalImageView->get_visible()
-    );
+        !this->originalImageView->get_visible());
 
-    auto beforeLabel = static_cast<Gtk::Label *>(
-        UIBuilder::get_instance().get_widget_from_id("beforeLabel"));
+    auto beforeLabel = UIBuilder::get_instance()
+                           .get_widget_from_id<Gtk::Label>("beforeLabel");
 
-    auto afterLabel = static_cast<Gtk::Label *>(
-        UIBuilder::get_instance().get_widget_from_id("afterLabel"));
+    auto afterLabel = UIBuilder::get_instance()
+                          .get_widget_from_id<Gtk::Label>("afterLabel");
 
     beforeLabel->set_visible(this->originalImageView->get_visible());
 
     afterLabel->set_visible(this->originalImageView->get_visible());
 
-    static_cast<Gtk::ToggleButton *>(
-            UIBuilder::get_instance()
-            .get_widget_from_id("dualViewToggleButton"))->
-                set_active(this->originalImageView->get_visible());
+    UIBuilder::get_instance()
+        .get_widget_from_id<Gtk::ToggleButton>("dualViewToggleButton")
+        ->set_active(this->originalImageView->get_visible());
 }
 
 void ImageProcessor::restore_to_original_pixbuf()
 {
+    g_return_if_fail(this->originalPixbuf);
+
     this->pixbuf = this->originalPixbuf.get()->copy();
 }
 
 void ImageProcessor::apply_effects()
 {
+    g_return_if_fail(this->originalPixbuf != nullptr);
+
     restore_to_original_pixbuf();
     parse_effect_data();
 

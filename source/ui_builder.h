@@ -8,7 +8,8 @@ class UIBuilder
 public:
     static UIBuilder &get_instance();
 
-    Gtk::Widget *get_widget_from_id(const char *id);
+    template <typename T>
+    T *get_widget_from_id(const char *id);
 
 private:
     UIBuilder();

@@ -11,7 +11,8 @@ UIBuilder::UIBuilder()
     builder = Gtk::Builder::create_from_resource("/ui/main_window.xml");
 }
 
-Gtk::Widget *UIBuilder::get_widget_from_id(const char *id)
+template <typename T>
+T *UIBuilder::get_widget_from_id(const char *id)
 {
-    return this->builder->get_widget<Gtk::Widget>(id);
+    return this->builder->get_widget<T>(id);
 }

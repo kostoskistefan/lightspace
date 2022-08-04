@@ -115,8 +115,9 @@
                                 <child>
                                     <object class="GtkBox">
                                         <child>
-                                            <object class="GtkButton">
+                                            <object class="GtkButton" id="applyEffectsButton">
                                                 <property name="label">Apply</property>
+                                                <property name="sensitive">0</property>
                                                 <property name="margin-end">3</property>
                                                 <property name="hexpand">1</property>
                                                 <property name="action-name">app.apply_effects</property>
@@ -144,45 +145,49 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkBox">
+                            <object class="GtkGrid">
                                 <property name="name">image-box</property>
                                 <property name="hexpand">True</property>
                                 <child>
-                                    <object class="GtkBox">
-                                        <property name="orientation">vertical</property>
-                                        <property name="margin-end">3</property>
-                                        <child>
-                                            <object class="GtkLabel" id="beforeLabel">
-                                                <property name="label" translatable="1">Before</property>
-                                                <property name="visible">False</property>
-                                                <property name="margin-bottom">6</property>
-                                            </object>
-                                        </child>
-                                        <child>
-                                            <object class="GtkPicture" id="originalImageView">
-                                                <property name="vexpand">True</property>
-                                                <property name="hexpand">True</property>
-                                            </object>
-                                        </child>
+                                    <object class="GtkLabel" id="beforeLabel">
+                                        <property name="label" translatable="1">Before</property>
+                                        <property name="visible">False</property>
+                                        <property name="margin-bottom">6</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">0</property>
+                                        </layout>
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkBox">
-                                        <property name="orientation">vertical</property>
-                                        <property name="margin-start">3</property>
-                                        <child>
-                                            <object class="GtkLabel" id="afterLabel">
-                                                <property name="label" translatable="1">After</property>
-                                                <property name="visible">False</property>
-                                                <property name="margin-bottom">6</property>
-                                            </object>
-                                        </child>
-                                        <child>
-                                            <object class="GtkPicture" id="imageView">
-                                                <property name="vexpand">True</property>
-                                                <property name="hexpand">True</property>
-                                            </object>
-                                        </child>
+                                    <object class="GtkPicture" id="originalImageView">
+                                        <property name="vexpand">True</property>
+                                        <property name="hexpand">True</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="afterLabel">
+                                        <property name="label" translatable="1">After</property>
+                                        <property name="visible">False</property>
+                                        <property name="margin-bottom">6</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkPicture" id="imageView">
+                                        <property name="vexpand">True</property>
+                                        <property name="hexpand">True</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">1</property>
+                                        </layout>
                                     </object>
                                 </child>
                             </object>
