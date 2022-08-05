@@ -1,14 +1,14 @@
 #include "effect_data_parser.h"
-#include "ui_builder.h"
 #include "effect.h"
 #include "utilities.h"
+#include "gui.h"
 
 void parse_effect_data()
 {
-    auto textView = UIBuilder::get_instance()
-                        .get_widget<Gtk::TextView>("textView");
-
-    auto text = textView->get_buffer()->get_text();
+    auto text = GUI::get_instance()
+                    .get_effects_text_view()
+                    ->get_buffer()
+                    ->get_text();
 
     g_return_if_fail(!text.empty());
 
@@ -43,4 +43,6 @@ void parse_effect_data()
         else if (name == "grayscale")
             apply_grayscale(string_to_bool(value));
     }
+
+    GUI::get_instance().redraw_picture();
 }

@@ -1,6 +1,7 @@
 #include "image_dialog.h"
 #include "image_processor.h"
 #include "ui_builder.h"
+#include "gui.h"
 
 ImageDialog::ImageDialog()
 {
@@ -65,6 +66,7 @@ void ImageDialog::open_image_callback(int response)
     auto pixbuf = Gdk::Pixbuf::create_from_file(filePath);
 
     ImageProcessor::get_instance().set_original_pixbuf(pixbuf);
+    GUI::get_instance().set_picture();
 }
 
 void ImageDialog::save_image_callback(int response)

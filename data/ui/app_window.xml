@@ -41,14 +41,15 @@
                                         <property name="action-name">app.open_image</property>
                                     </object>
                                 </child>
-                                <child>
+                                <!-- TODO: Implement project saving -->
+                                <!-- <child>
                                     <object class="GtkButton" id="saveProjectButton">
                                         <property name="label" translatable="1">Save</property>
                                         <property name="tooltip-text" translatable="1">Save project</property>
                                         <property name="icon-name">document-save</property>
                                         <property name="action-name">app.save_project</property>
                                     </object>
-                                </child>
+                                </child> -->
                                 <child>
                                     <object class="GtkButton" id="exportImageButton">
                                         <property name="label" translatable="1">Export</property>
@@ -105,7 +106,7 @@
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="GtkTextView" id="textView">
+                                            <object class="GtkTextView" id="effectsTextView">
                                                 <property name="vexpand">1</property>
                                             </object>
                                         </child>

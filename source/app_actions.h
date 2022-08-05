@@ -8,7 +8,7 @@ class AppActions
 {
 public:
     static AppActions &get_instance();
-    void create_action_map(Gtk::Window *appWindow);
+    void create_action_map();
 
 private:
     AppActions();
