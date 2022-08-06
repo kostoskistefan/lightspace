@@ -14,8 +14,6 @@ private:
     AppActions();
     AppActions(AppActions const &);
     void operator=(AppActions const &);
-
-    ImageDialog *dialog;
 };
 
 #endif // APP_ACTIONS_H

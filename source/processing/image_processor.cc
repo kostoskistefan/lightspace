@@ -1,6 +1,6 @@
 #include "image_processor.h"
-#include "ui_builder.h"
-#include "effect_data_parser.h"
+#include "../ui_builder.h"
+#include "../effect_data_parser.h"
 
 ImageProcessor &ImageProcessor::get_instance()
 {

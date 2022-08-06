@@ -1,6 +1,6 @@
 #include "gui.h"
 #include "ui_builder.h"
-#include "image_processor.h"
+#include "processing/image_processor.h"
 
 GUI &GUI::get_instance()
 {

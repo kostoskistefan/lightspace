@@ -2,7 +2,6 @@
 #include "gui.h"
 #include "app_actions.h"
 #include "signal_handler.h"
-#include "image_processor.h"
 #include <gtkmm/cssprovider.h>
 
 MainApplication::MainApplication()

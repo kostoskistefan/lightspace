@@ -1,7 +1,7 @@
 #include "effect_data_parser.h"
-#include "effect.h"
-#include "utilities.h"
 #include "gui.h"
+#include "utilities.h"
+#include "processing/effect.h"
 
 void parse_effect_data()
 {
@@ -20,29 +20,11 @@ void parse_effect_data()
             continue;
 
         auto name = tokens[0].lowercase();
-        auto value = tokens[1].lowercase();
+        auto amount = tokens[1].lowercase();
 
         trim(name);
-        trim(value);
+        trim(amount);
 
-        if (name == "temperature")
-            apply_temperature(CLAMP(string_to_double(value), -100, 100));
-
-        else if (name == "tint")
-            apply_tint(CLAMP(string_to_double(value), -100, 100));
-
-        else if (name == "exposure")
-            apply_exposure(CLAMP(string_to_double(value), -2.0f, 2.0f));
-
-        else if (name == "contrast")
-            apply_contrast(CLAMP(string_to_double(value), -100, 100));
-
-        else if (name == "saturation")
-            apply_saturation(CLAMP(string_to_double(value), 0, 2.0f));
-
-        else if (name == "grayscale")
-            apply_grayscale(string_to_bool(value));
+        Effect::apply(name, amount);
     }
-
-    GUI::get_instance().redraw_picture();
 }

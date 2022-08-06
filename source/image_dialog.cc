@@ -1,20 +1,19 @@
 #include "image_dialog.h"
-#include "image_processor.h"
+#include "processing/image_processor.h"
 #include "ui_builder.h"
 #include "gui.h"
 
-ImageDialog::ImageDialog()
+ImageDialog::ImageDialog(Gtk::Window *parent)
 {
     dialog = Gtk::FileChooserNative::create("", Gtk::FileChooser::Action::OPEN, "", "Cancel");
     dialog->set_modal(true);
+    dialog->set_transient_for(*parent);
     add_dialog_file_filter();
 }
 
-ImageDialog::~ImageDialog() {}
-
-void ImageDialog::set_parent(Gtk::Window *parent)
+ImageDialog::~ImageDialog() 
 {
-    this->dialog->set_transient_for(*parent);
+    delete &dialog;
 }
 
 void ImageDialog::set_title(std::string title)
@@ -37,25 +36,7 @@ void ImageDialog::add_dialog_file_filter()
     dialog->set_filter(filterImages);
 }
 
-void ImageDialog::open_image()
-{
-    dialog->signal_response().connect([=](int response)
-                                      { open_image_callback(response); });
-
-    dialog->show();
-}
-
-void ImageDialog::export_image()
-{
-    dialog->set_current_name("untitled.png");
-
-    dialog->signal_response().connect([=](int response)
-                                      { save_image_callback(response); });
-
-    dialog->show();
-}
-
-void ImageDialog::open_image_callback(int response)
+static void open_image_callback(int response, Glib::RefPtr<Gtk::FileChooserNative> dialog)
 {
     dialog->hide();
 
@@ -69,7 +50,7 @@ void ImageDialog::open_image_callback(int response)
     GUI::get_instance().set_picture();
 }
 
-void ImageDialog::save_image_callback(int response)
+static void export_image_callback(int response, Glib::RefPtr<Gtk::FileChooserNative> dialog)
 {
     dialog->hide();
 
@@ -79,4 +60,26 @@ void ImageDialog::save_image_callback(int response)
     auto filePath = dialog->get_file()->get_path();
 
     ImageProcessor::get_instance().get_pixbuf()->save(filePath, "png");
+}
+
+void ImageDialog::open_image()
+{
+    dialog->signal_response().connect(
+        sigc::bind(
+            sigc::ptr_fun(open_image_callback),
+            this->dialog));
+
+    dialog->show();
+}
+
+void ImageDialog::export_image()
+{
+    dialog->set_current_name("untitled.png");
+
+    dialog->signal_response().connect(
+        sigc::bind(
+            sigc::ptr_fun(export_image_callback),
+            this->dialog));
+
+    dialog->show();
 }
