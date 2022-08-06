@@ -2,7 +2,7 @@
 #include "../pixel.h"
 #include "../utilities.h"
 #include "../image_data.h"
-#include "../image_processor.h"
+#include "image_processor.h"
 #include <omp.h>
 
 void Exposure::normalize(double *amount)

@@ -2,7 +2,7 @@
 #include "../pixel.h"
 #include "../color_space.h"
 #include "../image_data.h"
-#include "../image_processor.h"
+#include "image_processor.h"
 #include <omp.h>
 
 void Saturation::normalize(double *amount)

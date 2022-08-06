@@ -1,7 +1,7 @@
 #include "contrast.h"
 #include "../pixel.h"
 #include "../image_data.h"
-#include "../image_processor.h"
+#include "image_processor.h"
 #include <omp.h>
 
 void Contrast::normalize(double *amount)
