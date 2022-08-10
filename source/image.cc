@@ -1,6 +1,6 @@
 #include "image.h"
 
-Image::Image() 
+Image::Image()
 {
     this->width = 0;
     this->height = 0;
@@ -39,4 +39,24 @@ bool Image::is_valid()
     g_return_val_if_fail(this->bitsPerSample > 0, false);
 
     return true;
+}
+
+uint8_t *Image::at(uint16_t x, uint16_t y)
+{
+    return &this->pixels[y * this->rowstride + x * this->channels];
+}
+
+void Image::copy_pixels(Image &image)
+{
+    for (int x = 0; x < image.width; x++)
+    {
+        for (int y = 0; y < image.height; y++)
+        {
+            uint8_t *pixel = this->at(x, y);
+            uint8_t *pixelToCopy = image.at(x, y);
+
+            for (int channel = 0; channel < image.channels; channel++)
+                pixel[channel] = pixelToCopy[channel];
+        }
+    }
 }

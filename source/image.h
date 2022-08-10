@@ -4,7 +4,6 @@
 #include <gtkmm.h>
 #include <cstdint>
 
-
 /**
  * @class Image
  * @brief Class to store data from an image.
@@ -51,6 +50,21 @@ public:
      * @return True if the image is valid, false otherwise.
      */
     bool is_valid();
+
+    /**
+     * @brief Get the pixel at a given position.
+     * @param x The x position of the pixel.
+     * @param y The y position of the pixel.
+     * @return A reference to the pixel at the given position.
+     */
+    uint8_t *at(uint16_t x, uint16_t y);
+
+    /**
+     * @brief Copy the pixels from another image.
+     * @details Modifies the current image by copying the values of each color channel of each pixel from another image passed as a parameter.
+     * @param image The image to copy the data from.
+     */
+    void copy_pixels(Image &image);
 };
 
 #endif // IMAGE_H

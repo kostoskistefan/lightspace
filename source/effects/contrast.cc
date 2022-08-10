@@ -11,7 +11,7 @@ void Contrast::apply(Image &image, double amount)
     {
         for (int y = 0; y < image.height; y++)
         {
-            uint8_t *pixel = &image.pixels[y * image.rowstride + x * image.channels];
+            uint8_t *pixel = image.at(x, y);
 
             for (int channel = 0; channel < image.channels; channel++)
             {
