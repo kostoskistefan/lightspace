@@ -34,7 +34,7 @@ private:
 	Gtk::TextView *effectsTextView;
 
 	void map_signals();
-	void redraw_image();
+	void load_style_sheet();
 	void toggle_dual_view();
 	void toggle_before_after();
 	void set_title_from_filepath(const std::string &path);

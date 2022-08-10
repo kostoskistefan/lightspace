@@ -22,6 +22,16 @@ LightspaceWindow::LightspaceWindow(
 	this->toggleBeforeAfterButton = builder->get_widget<Gtk::ToggleButton>("toggle_before_after_button");
 
 	map_signals();
+	load_style_sheet();
+}
+
+void LightspaceWindow::load_style_sheet()
+{
+	auto provider = Gtk::CssProvider::create();
+	provider->load_from_resource("/com/github/kostoskistefan/lightspace/lightspace.css");
+
+	this->get_style_context()->add_provider_for_display(
+		this->get_display(), provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
 
 void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileChooser::Action action)
@@ -32,8 +42,8 @@ void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileCho
 
 		this->imageProcessor->open_image(pixbuf);
 
-		this->originalImageView->set_pixbuf(pixbuf);
-		redraw_image();
+		this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
+		this->originalImageView->set_pixbuf(this->imageProcessor->copy_original_pixbuf());
 
 		this->set_title_from_filepath(filePath);
 	}
@@ -73,18 +83,6 @@ void LightspaceWindow::map_signals()
 	this->add_controller(controller);
 }
 
-void LightspaceWindow::on_effects_text_view_changed()
-{
-	bool textViewHasText = this->effectsTextView->get_buffer()->get_text().empty();
-
-	this->applyEffectsButton->set_sensitive(!textViewHasText);
-}
-
-void LightspaceWindow::redraw_image()
-{
-	this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
-}
-
 void LightspaceWindow::toggle_dual_view()
 {
 	auto currentState = !this->toggleDualViewButton->get_active();
@@ -114,9 +112,16 @@ void LightspaceWindow::set_title_from_filepath(const std::string &path)
 	this->set_title(Utilities::get_filename_from_path(path) + " - Lightspace");
 }
 
+void LightspaceWindow::on_effects_text_view_changed()
+{
+	bool textViewHasText = this->effectsTextView->get_buffer()->get_text().empty();
+
+	this->applyEffectsButton->set_sensitive(!textViewHasText);
+}
+
 bool LightspaceWindow::on_key_pressed(guint keyval, guint, Gdk::ModifierType state)
 {
-	(void) state;
+	(void)state;
 
 	switch (keyval)
 	{
@@ -136,7 +141,7 @@ void LightspaceWindow::on_apply_effects_button_clicked()
 	auto text = this->effectsTextView->get_buffer()->get_text();
 	auto effects = EffectsParser::parse(text);
 	this->imageProcessor->process_image(effects);
-	this->redraw_image();
+	this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
 }
 
 std::unique_ptr<LightspaceWindow> LightspaceWindow::create()

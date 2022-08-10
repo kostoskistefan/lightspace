@@ -14,8 +14,10 @@ public:
     void set_pixbuf(const std::shared_ptr<Gdk::Pixbuf> pixbuf);
     void set_original_pixbuf(const std::shared_ptr<Gdk::Pixbuf> pixbuf);
 
-    // TODO: Change return types to avoid unnecessary shared_ptr overhead
+    // TODO: Change return type to avoid unnecessary shared_ptr overhead
     std::shared_ptr<Gdk::Pixbuf> get_processed_pixbuf();
+    
+    // TODO: Change return type to avoid unnecessary shared_ptr overhead
     std::shared_ptr<Gdk::Pixbuf> copy_original_pixbuf();
 
     void process_image(std::vector<effect_t> effects);
