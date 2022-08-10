@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <object id="appWindow" class="GtkWindow">
+    <object id="window" class="GtkApplicationWindow">
         <property name="title" translatable="1">Lightspace</property>
         <property name="width-request">800</property>
         <property name="height-request">600</property>
@@ -21,7 +21,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkLabel" id="logoText">
+                                    <object class="GtkLabel" id="logo_text">
                                         <property name="label" translatable="1">Lightspace</property>
                                         <property name="margin-start">2</property>
                                         <property name="name">logo-text</property>
@@ -35,15 +35,15 @@
                                 </child>
                                 <child>
                                     <object class="GtkButton">
-                                        <property name="label" translatable="1">Import</property>
-                                        <property name="tooltip-text" translatable="1">Import new files</property>
+                                        <property name="label" translatable="1">Open image</property>
+                                        <property name="tooltip-text" translatable="1">Open new image file</property>
                                         <property name="icon-name">document-open</property>
                                         <property name="action-name">app.open_image</property>
                                     </object>
                                 </child>
                                 <!-- TODO: Implement project saving -->
                                 <!-- <child>
-                                    <object class="GtkButton" id="saveProjectButton">
+                                    <object class="GtkButton" id="save_project_button">
                                         <property name="label" translatable="1">Save</property>
                                         <property name="tooltip-text" translatable="1">Save project</property>
                                         <property name="icon-name">document-save</property>
@@ -51,7 +51,7 @@
                                     </object>
                                 </child> -->
                                 <child>
-                                    <object class="GtkButton" id="exportImageButton">
+                                    <object class="GtkButton" id="export_image_button">
                                         <property name="label" translatable="1">Export</property>
                                         <property name="tooltip-text" translatable="1">Export image</property>
                                         <property name="icon-name">send-to</property>
@@ -66,7 +66,7 @@
                                 <property name="hexpand">True</property>
                                 <property name="halign">end</property>
                                 <child>
-                                    <object class="GtkToggleButton" id="beforeAfterToggleButton">
+                                    <object class="GtkToggleButton" id="toggle_before_after_button">
                                         <property name="label" translatable="1">Toggle Before/After</property>
                                         <property name="tooltip-text" translatable="1">Toggle Before/After</property>
                                         <property name="action-name">app.toggle_before_after</property>
@@ -74,7 +74,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkToggleButton" id="dualViewToggleButton">
+                                    <object class="GtkToggleButton" id="toggle_dual_view_button">
                                         <property name="label" translatable="1">Toggle dual view</property>
                                         <property name="tooltip-text" translatable="1">Toggle dual view</property>
                                         <property name="action-name">app.toggle_dual_view</property>
@@ -106,7 +106,7 @@
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="GtkTextView" id="effectsTextView">
+                                            <object class="GtkTextView" id="effects_text_view">
                                                 <property name="vexpand">1</property>
                                             </object>
                                         </child>
@@ -116,7 +116,7 @@
                                 <child>
                                     <object class="GtkBox">
                                         <child>
-                                            <object class="GtkButton" id="applyEffectsButton">
+                                            <object class="GtkButton" id="apply_effects_button">
                                                 <property name="label">Apply</property>
                                                 <property name="sensitive">False</property>
                                                 <property name="margin-end">3</property>
@@ -149,8 +149,12 @@
                             <object class="GtkGrid">
                                 <property name="name">image-box</property>
                                 <property name="hexpand">True</property>
+                                <property name="margin-top">6</property>
+                                <property name="margin-bottom">6</property>
+                                <property name="margin-start">6</property>
+                                <property name="margin-end">6</property>
                                 <child>
-                                    <object class="GtkLabel" id="beforeLabel">
+                                    <object class="GtkLabel" id="before_label">
                                         <property name="label" translatable="1">Before</property>
                                         <property name="visible">False</property>
                                         <property name="margin-bottom">6</property>
@@ -161,9 +165,10 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkPicture" id="originalImageView">
+                                    <object class="GtkPicture" id="original_image_view">
                                         <property name="vexpand">True</property>
                                         <property name="hexpand">True</property>
+                                        <property name="visible">False</property>
                                         <layout>
                                             <property name="column">0</property>
                                             <property name="row">1</property>
@@ -171,7 +176,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkLabel" id="afterLabel">
+                                    <object class="GtkLabel" id="after_label">
                                         <property name="label" translatable="1">After</property>
                                         <property name="visible">False</property>
                                         <property name="margin-bottom">6</property>
@@ -182,7 +187,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkPicture" id="imageView">
+                                    <object class="GtkPicture" id="image_view">
                                         <property name="vexpand">True</property>
                                         <property name="hexpand">True</property>
                                         <layout>

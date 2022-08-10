@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/com/github/kostoskistefan/lightspace">
+        <file preprocess="xml-stripblanks">lightspace.ui</file>
+        <file>lightspace.css</file>
+    </gresource>
+</gresources>

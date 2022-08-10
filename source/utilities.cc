@@ -1,82 +1,39 @@
 #include "utilities.h"
+#include <sstream>
 #include <algorithm>
 
-double fastPow(double a, double b)
+std::string Utilities::get_filename_from_path(const std::string &path)
 {
-    union
-    {
-        double d;
-        int x[2];
-    } u = {a};
-
-    u.x[1] = (int)(b * (u.x[1] - 1072632447) + 1072632447);
-    u.x[0] = 0;
-
-    return u.d;
+    // TODO: Handle paths on multiple platforms.
+    size_t lastSlash = path.find_last_of("/");
+    return path.substr(lastSlash + 1, path.back());
 }
 
-void trim_left(Glib::ustring &s)
+std::vector<std::string> Utilities::split(const std::string &string, char delimeter)
 {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch)
-                                    { return !std::isspace(ch); }));
-}
-
-void trim_right(Glib::ustring &s)
-{
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch)
-                         { return !std::isspace(ch); })
-                .base(),
-            s.end());
-}
-
-void trim(Glib::ustring &s)
-{
-    trim_left(s);
-    trim_right(s);
-}
-
-std::vector<Glib::ustring> split(Glib::ustring &str, char delimeter)
-{
-    std::stringstream ss(str);
+    std::istringstream ss(string);
     std::string item;
-    std::vector<Glib::ustring> tokens;
+    std::vector<std::string> tokens;
 
-    while (std::getline(ss, item, delimeter))
+    for (std::string item; std::getline(ss, item, delimeter); )
        tokens.push_back(item);
 
     return tokens;
 }
 
-double string_to_double(const Glib::ustring &str)
+std::string Utilities::lowercase(const std::string &string)
 {
-    double value;
+    std::string lowercaseString = string;
 
-    try
-    {
-        value = std::stod(str);
-    }
+    std::transform(lowercaseString.begin(), lowercaseString.end(), lowercaseString.begin(), ::tolower);
 
-    catch (std::exception &e)
-    {
-        value = 0;
-        fprintf(stderr, "%s\n", e.what());
-    }
-
-    return value;
+    return lowercaseString;
 }
 
-bool string_to_bool(const Glib::ustring &str)
+std::string Utilities::trim(const std::string &string)
 {
-    bool value = false;
-
-    if (str.lowercase() == "true")
-        value = true;
-
-    else if (str.lowercase() == "false")
-        value = false;
-
-    else 
-        fprintf(stderr, "Cannot convert the string: '%s' to bool\n", str);
-
-    return value;
+    std::string trimmedString = string;
+    trimmedString.erase(trimmedString.find_last_not_of(" \n\r\t") + 1);
+    trimmedString.erase(0, trimmedString.find_first_not_of(" \n\r\t"));
+    return trimmedString;
 }
