@@ -37,12 +37,13 @@ public:
      */
     Image(std::shared_ptr<Gdk::Pixbuf> pixbuf);
 
-    uint8_t *pixels;
-    uint16_t width;
-    uint16_t height;
-    uint8_t channels;
-    uint16_t rowstride;
-    uint8_t bitsPerSample;
+    /**
+     * @brief Assignment operator.
+     * @details Copies the data from another image.
+     * @param image The image to copy the data from.
+     * @return A reference to this image.
+     */
+    Image& operator=(const Image &image);
 
     /**
      * @brief Check if the image is valid.
@@ -55,9 +56,20 @@ public:
      * @brief Get the pixel at a given position.
      * @param x The x position of the pixel.
      * @param y The y position of the pixel.
-     * @return A reference to the pixel at the given position.
+     * @return A pointer to the pixel at the given position.
+     * @see at(uint16_t x, uint16_t y, uint8_t channel)
      */
     uint8_t *at(uint16_t x, uint16_t y);
+
+    /**
+     * @brief Get the channel of a pixel at a given position.
+     * @param x The x position of the pixel.
+     * @param y The y position of the pixel.
+     * @param channel The channel to get.
+     * @return A reference to the channel of the pixel at the given position.
+     * @see at(uint16_t x, uint16_t y)
+     */
+    uint8_t &at(uint16_t x, uint16_t y, uint8_t channel);
 
     /**
      * @brief Copy the pixels from another image.
@@ -65,6 +77,13 @@ public:
      * @param image The image to copy the data from.
      */
     void copy_pixels(Image &image);
+
+    uint8_t *pixels;
+    uint16_t width;
+    uint16_t height;
+    uint8_t channels;
+    uint16_t rowstride;
+    uint8_t bitsPerSample;
 };
 
 #endif // IMAGE_H

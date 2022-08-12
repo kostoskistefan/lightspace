@@ -11,17 +11,18 @@ public:
 
     void open_image(const std::shared_ptr<Gdk::Pixbuf> pixbuf);
 
-    void set_pixbuf(const std::shared_ptr<Gdk::Pixbuf> pixbuf);
-    void set_original_pixbuf(const std::shared_ptr<Gdk::Pixbuf> pixbuf);
-
-    // TODO: Change return type to avoid unnecessary shared_ptr overhead
     std::shared_ptr<Gdk::Pixbuf> get_processed_pixbuf();
-    
-    // TODO: Change return type to avoid unnecessary shared_ptr overhead
     std::shared_ptr<Gdk::Pixbuf> copy_original_pixbuf();
 
     void process_image(std::vector<effect_t> effects);
     void save_image(std::string filePath, std::string format);
+
+    void restore_original_pixels();
+
+    sigc::signal<void()> signal_processing_changed();
+
+protected:
+    sigc::signal<void()> signalProcessingChanged;
 
 private:
     std::shared_ptr<Gdk::Pixbuf> pixbuf;

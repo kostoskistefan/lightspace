@@ -8,6 +8,7 @@ LightspaceWindow::LightspaceWindow(
 	: Gtk::ApplicationWindow(cobject), builder(builder)
 {
 	this->imageProcessor = new ImageProcessor();
+    this->histogram = new Histogram();
 
 	this->imageView = builder->get_widget<Gtk::Picture>("image_view");
 	this->originalImageView = builder->get_widget<Gtk::Picture>("original_image_view");
@@ -21,6 +22,9 @@ LightspaceWindow::LightspaceWindow(
 	this->toggleDualViewButton = builder->get_widget<Gtk::ToggleButton>("toggle_dual_view_button");
 	this->toggleBeforeAfterButton = builder->get_widget<Gtk::ToggleButton>("toggle_before_after_button");
 
+    this->histogramBox = builder->get_widget<Gtk::Box>("histogram_box");
+    this->histogramBox->insert_child_at_start(*this->histogram);
+
 	map_signals();
 	load_style_sheet();
 }
@@ -32,26 +36,6 @@ void LightspaceWindow::load_style_sheet()
 
 	this->get_style_context()->add_provider_for_display(
 		this->get_display(), provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
-}
-
-void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileChooser::Action action)
-{
-	if (action == Gtk::FileChooser::Action::OPEN)
-	{
-		auto pixbuf = Gdk::Pixbuf::create_from_file(filePath);
-
-		this->imageProcessor->open_image(pixbuf);
-
-		this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
-		this->originalImageView->set_pixbuf(this->imageProcessor->copy_original_pixbuf());
-
-		this->set_title_from_filepath(filePath);
-	}
-
-	else if (action == Gtk::FileChooser::Action::SAVE)
-	{
-		this->imageProcessor->save_image(filePath, "jpeg");
-	}
 }
 
 void LightspaceWindow::map_signals()
@@ -73,6 +57,9 @@ void LightspaceWindow::map_signals()
 
 	this->applyEffectsButton->signal_clicked().connect(
 		sigc::mem_fun(*this, &LightspaceWindow::on_apply_effects_button_clicked));
+
+    this->imageProcessor->signal_processing_changed().connect(
+            sigc::mem_fun(*this->histogram, &Histogram::queue_draw));
 
 	// TODO: Move key press controller to a separate function.
 	auto controller = Gtk::EventControllerKey::create();
@@ -117,6 +104,29 @@ void LightspaceWindow::on_effects_text_view_changed()
 	bool textViewHasText = this->effectsTextView->get_buffer()->get_text().empty();
 
 	this->applyEffectsButton->set_sensitive(!textViewHasText);
+}
+
+void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileChooser::Action action)
+{
+	if (action == Gtk::FileChooser::Action::OPEN)
+	{
+		auto pixbuf = Gdk::Pixbuf::create_from_file(filePath);
+
+		this->imageProcessor->open_image(pixbuf);
+
+		this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
+		this->originalImageView->set_pixbuf(this->imageProcessor->copy_original_pixbuf());
+
+		this->set_title_from_filepath(filePath);
+
+		this->histogram->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
+        this->histogram->queue_draw();
+	}
+
+	else if (action == Gtk::FileChooser::Action::SAVE)
+	{
+		this->imageProcessor->save_image(filePath, "jpeg");
+	}
 }
 
 bool LightspaceWindow::on_key_pressed(guint keyval, guint, Gdk::ModifierType state)

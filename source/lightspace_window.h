@@ -2,8 +2,9 @@
 #define LIGHTSPACE_WINDOW_H
 
 #include <gtkmm.h>
-#include "image_processor.h"
 #include "file_dialog.h"
+#include "image_processor.h"
+#include "widgets/histogram.h"
 
 class LightspaceWindow : public Gtk::ApplicationWindow
 {
@@ -18,7 +19,9 @@ public:
 	static std::unique_ptr<LightspaceWindow> create();
 
 private:
+    Histogram *histogram;
 	ImageProcessor *imageProcessor;
+
 	std::shared_ptr<Gtk::Builder> builder;
 
 	Gtk::Picture *imageView;
@@ -26,6 +29,8 @@ private:
 
 	Gtk::Label *beforeLabel;
 	Gtk::Label *afterLabel;
+
+    Gtk::Box *histogramBox;
 
 	Gtk::Button *applyEffectsButton;
 	Gtk::ToggleButton *toggleDualViewButton;

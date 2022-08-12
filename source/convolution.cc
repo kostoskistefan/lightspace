@@ -1,6 +1,6 @@
 #include "convolution.h"
 
-void convolve(Image image, kernel_t kernel)
+void convolve(Image image, Kernel kernel)
 {
     // Convolution based on http://www.songho.ca/dsp/convolution/convolution2d_example.html
 
@@ -9,7 +9,7 @@ void convolve(Image image, kernel_t kernel)
     buffer.pixels = new uint8_t[image.width * image.height * image.channels];
 
     // Get the center of the kernel.
-    int center = (kernel.size - 1) / 2;
+    int center = (kernel.get_size() - 1) / 2;
 
     for (int channel = 0; channel < image.channels; channel++)
     {
@@ -41,15 +41,17 @@ void convolve(Image image, kernel_t kernel)
                         float kernelValue = kernel.at(i + center, j + center);
 
                         // Set the value for the current pixel based on the kernel
-                        value += kernelValue * image.at(x2, y2)[channel];
+                        value += kernelValue * image.at(x2, y2, channel);
                     }
                 }
 
                 // Add the value of the convoluted pixel to the buffer image.
-                buffer.at(x, y)[channel] = CLAMP(value, 0, 255);
+                buffer.at(x, y, channel) = CLAMP(value, 0, 255);
             }
         }
     }
+
+    delete buffer.pixels;
 
     image.copy_pixels(buffer);
 }

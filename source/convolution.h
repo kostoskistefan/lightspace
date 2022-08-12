@@ -4,6 +4,6 @@
 #include "image.h"
 #include "kernel.h"
 
-void convolve(Image image, kernel_t kernel);
+void convolve(Image image, Kernel kernel);
 
 #endif // CONVOLUTION_H

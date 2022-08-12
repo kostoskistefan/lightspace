@@ -1,7 +1,7 @@
 #include <gtkmm.h>
 #include "lightspace_window.h"
 
-static void on_activate(std::shared_ptr<Gtk::Application> app)
+static void on_activate(std::shared_ptr<Gtk::Application> &app)
 {
     // Get the current window. If there is not one, we will create it.
     static std::unique_ptr<Gtk::Window> window;

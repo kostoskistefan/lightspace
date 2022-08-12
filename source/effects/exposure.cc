@@ -1,11 +1,11 @@
-#include "contrast.h"
+#include "exposure.h"
 
-void Contrast::apply(Image &image, double amount)
+void Exposure::apply(Image &image, double amount)
 {
     if (!image.is_valid())
         return;
 
-    float factor = (259 * (amount + 255)) / (255 * (259 - amount));
+    double value = pow(2, amount);
 
     for (int y = 0; y < image.height; y++)
     {
@@ -14,7 +14,7 @@ void Contrast::apply(Image &image, double amount)
             uint8_t *pixel = image.at(x, y);
 
             for (int channel = 0; channel < image.channels; channel++)
-                pixel[channel] = CLAMP(factor * (pixel[channel] - 128) + 128, 0, 255);
+                pixel[channel] = CLAMP(pixel[channel] * value, 0, 255);
         }
     }
 }

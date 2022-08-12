@@ -3,9 +3,9 @@
 
 #include <string>
 
-typedef struct effect {
+struct effect_t {
     std::string name;
     double amount;
-} effect_t;
+};
 
 #endif // EFFECT_H
