@@ -33,16 +33,6 @@ uint32_t &HistogramData::at(uint16_t channel, uint16_t colorValue)
     return this->data[channel * (1 << this->image.bitsPerSample) + colorValue];
 }
 
-uint32_t HistogramData::get_average()
-{
-    uint32_t average = 0;
-
-    for (uint16_t i = 0; i < this->size; i++)
-        average += this->data[i];
-        
-    return average / this->size;
-}
-
 uint32_t *HistogramData::get_data()
 {
     return this->data;

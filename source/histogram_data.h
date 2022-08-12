@@ -44,13 +44,6 @@ public:
     uint32_t &at(uint16_t channel, uint16_t colorValue);
 
     /**
-     * @brief Get the average value of the histogram.
-     * @details Calculates the average value of all channels of the histogram.
-     * @return The average value of the histogram.
-     */
-    uint32_t get_average();
-
-    /**
      * @brief Get the histogram data.
      * @return A pointer to the histogram data.
      */

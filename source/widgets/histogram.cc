@@ -20,13 +20,13 @@ Histogram::~Histogram() {}
 void set_context_color_from_channel(const Cairo::RefPtr<Cairo::Context> &cr, int8_t channel)
 {
     Gdk::RGBA color;
-    
+
     switch (channel)
     {
     case 0:
         color.set_rgba(1, 0, 0, 0.3);
         break;
-    
+
     case 1:
         color.set_rgba(0, 1, 0, 0.3);
         break;
@@ -39,18 +39,18 @@ void set_context_color_from_channel(const Cairo::RefPtr<Cairo::Context> &cr, int
         color.set("dimgrey");
         break;
     }
-    
+
     cr->set_source_rgba(color.get_red(), color.get_green(), color.get_blue(), color.get_alpha());
 }
 
 void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, int height)
 {
-    (void)width;
-    (void)height;
+    cr->translate(0.0f, height);
+    cr->scale(1.0f, -2.0f);
 
-    cr->set_source_rgba(0, 0, 0, 0.1);
-    cr->set_line_width(this->get_width() / 200.0f);
-    // cr->set_line_cap(Cairo::Context::LineCap::ROUND);
+    cr->set_source_rgba(0, 0, 0, 0.1f);
+    cr->set_line_width(width / 200.0f);
+    cr->set_line_cap(Cairo::Context::LineCap::ROUND);
     cr->paint();
 
     if (this->pixbuf == nullptr)
@@ -63,25 +63,20 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
 
     HistogramData histogramData(image);
 
-    #define HISTOGRAM_TOP_PADDING 10
-
-    double scaleX = 1.0 / histogramData.get_channel_size() * this->get_width();
-
-    // TODO: Fix vertical scaling for the histogram
-    double scaleY = 1.0 / (histogramData.get_average() * 5) * (this->get_height() - HISTOGRAM_TOP_PADDING);
+    double scaleX = 1.0 / histogramData.get_channel_size() * width;
 
     for (uint8_t channel = 0; channel < image.channels; channel++)
     {
         if (image.channels == 1)
             set_context_color_from_channel(cr, -1);
 
-        else 
+        else
             set_context_color_from_channel(cr, channel);
 
         for (uint32_t i = 0; i < histogramData.get_channel_size(); i++)
         {
-            cr->move_to(i * scaleX, this->get_height());
-            cr->line_to(i * scaleX, this->get_height() - histogramData.at(channel, i) * scaleY);
+            cr->move_to(i * scaleX, 0);
+            cr->line_to(i * scaleX, (float) histogramData.at(channel, i) / histogramData.get_channel_size());
         }
 
         cr->stroke();

@@ -20,6 +20,7 @@ tooltip {
 #image-box {
     padding: 6px;
     box-shadow: inset 0 0 4px #999;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 #histogram-box {
