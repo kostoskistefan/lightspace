@@ -1,6 +1,6 @@
 #include "histogram.h"
-#include "../image.h"
-#include "../histogram_data.h"
+#include "../types/image.h"
+#include "../types/histogram_data.h"
 #include <cstdlib>
 
 Histogram::Histogram()

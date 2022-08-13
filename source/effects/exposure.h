@@ -1,7 +1,7 @@
 #ifndef EXPOSURE_H
 #define EXPOSURE_H
 
-#include "../image.h"
+#include "../types/image.h"
 
 namespace Exposure
 {

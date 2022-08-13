@@ -1,7 +1,7 @@
 #ifndef TEMPERATURE_H
 #define TEMPERATURE_H
 
-#include "../image.h"
+#include "../types/image.h"
 
 namespace Temperature
 {

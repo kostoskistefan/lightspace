@@ -1,4 +1,5 @@
 #include "tint.h"
+#include "../types/rgb_pixel.h"
 
 void Tint::apply(Image &image, double amount)
 {
@@ -9,9 +10,9 @@ void Tint::apply(Image &image, double amount)
     {
         for (int x = 0; x < image.width; x++)
         {
-            uint8_t *pixel = image.at(x, y);
+            RgbPixel pixel = image.at(x, y);
 
-            pixel[1] = CLAMP(pixel[1] + amount, 0, 255);
+            pixel.g() = CLAMP(pixel.g() + amount, 0, 255);
         }
     }
 }

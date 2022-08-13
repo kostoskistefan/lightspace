@@ -2,7 +2,7 @@
 #define EFFECTS_PARSER_H
 
 #include <vector>
-#include "../effect.h"
+#include "../types/effect.h"
 
 namespace EffectsParser
 {

@@ -54,7 +54,7 @@ bool Image::is_valid()
     return true;
 }
 
-uint8_t *Image::at(uint16_t x, uint16_t y)
+RgbPixel Image::at(uint16_t x, uint16_t y)
 {
     return &this->pixels[y * this->rowstride + x * this->channels];
 }
@@ -67,14 +67,6 @@ uint8_t &Image::at(uint16_t x, uint16_t y, uint8_t channel)
 void Image::copy_pixels(Image &image)
 {
     for (int x = 0; x < image.width; x++)
-    {
         for (int y = 0; y < image.height; y++)
-        {
-            uint8_t *pixel = this->at(x, y);
-            uint8_t *pixelToCopy = image.at(x, y);
-
-            for (int channel = 0; channel < image.channels; channel++)
-                pixel[channel] = pixelToCopy[channel];
-        }
-    }
+            this->at(x, y) = image.at(x, y);
 }

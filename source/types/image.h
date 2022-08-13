@@ -1,8 +1,9 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <gtkmm.h>
+#include <gdkmm/pixbuf.h>
 #include <cstdint>
+#include "rgb_pixel.h"
 
 /**
  * @class Image
@@ -59,7 +60,7 @@ public:
      * @return A pointer to the pixel at the given position.
      * @see at(uint16_t x, uint16_t y, uint8_t channel)
      */
-    uint8_t *at(uint16_t x, uint16_t y);
+    RgbPixel at(uint16_t x, uint16_t y);
 
     /**
      * @brief Get the channel of a pixel at a given position.

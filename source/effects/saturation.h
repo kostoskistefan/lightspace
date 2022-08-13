@@ -1,7 +1,7 @@
 #ifndef SATURATION_H
 #define SATURATION_H
 
-#include "../image.h"
+#include "../types/image.h"
 
 namespace Saturation
 {

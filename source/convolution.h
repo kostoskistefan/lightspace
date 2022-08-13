@@ -1,8 +1,8 @@
 #ifndef CONVOLUTION_H
 #define CONVOLUTION_H
 
-#include "image.h"
-#include "kernel.h"
+#include "types/image.h"
+#include "types/kernel.h"
 
 void convolve(Image image, Kernel kernel);
 

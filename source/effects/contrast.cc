@@ -1,4 +1,5 @@
 #include "contrast.h"
+#include "../types/rgb_pixel.h"
 
 void Contrast::apply(Image &image, double amount)
 {
@@ -11,7 +12,7 @@ void Contrast::apply(Image &image, double amount)
     {
         for (int x = 0; x < image.width; x++)
         {
-            uint8_t *pixel = image.at(x, y);
+            RgbPixel pixel = image.at(x, y);
 
             for (int channel = 0; channel < image.channels; channel++)
                 pixel[channel] = CLAMP(factor * (pixel[channel] - 128) + 128, 0, 255);

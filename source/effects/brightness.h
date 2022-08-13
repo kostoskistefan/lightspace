@@ -1,7 +1,7 @@
 #ifndef BRIGHTNESS_H
 #define BRIGHTNESS_H
 
-#include "../image.h"
+#include "../types/image.h"
 
 namespace Brightness
 {

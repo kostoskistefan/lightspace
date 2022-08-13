@@ -1,4 +1,5 @@
 #include "file_dialog.h"
+#include <gtkmm/dialog.h>
 
 FileDialog::FileDialog(Gtk::Window *parent)
 {

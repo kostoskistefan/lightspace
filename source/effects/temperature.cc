@@ -1,4 +1,5 @@
 #include "temperature.h"
+#include "../types/rgb_pixel.h"
 
 void Temperature::apply(Image &image, double amount)
 {
@@ -9,10 +10,10 @@ void Temperature::apply(Image &image, double amount)
     {
         for (int x = 0; x < image.width; x++)
         {
-            uint8_t *pixel = image.at(x, y);
+            RgbPixel pixel = image.at(x, y);
 
-            pixel[0] = CLAMP(pixel[0] + amount, 0, 255);
-            pixel[2] = CLAMP(pixel[2] - amount, 0, 255);
+            pixel.r() = CLAMP(pixel.r() + amount, 0, 255);
+            pixel.b() = CLAMP(pixel.b() - amount, 0, 255);
         }
     }
 }

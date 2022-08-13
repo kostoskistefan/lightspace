@@ -1,4 +1,5 @@
-#include <gtkmm.h>
+#include <gtkmm/window.h>
+#include <gtkmm/application.h>
 #include "lightspace_window.h"
 
 static void on_activate(std::shared_ptr<Gtk::Application> &app)

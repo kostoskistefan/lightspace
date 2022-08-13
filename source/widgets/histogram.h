@@ -1,7 +1,9 @@
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 
-#include <gtkmm.h>
+#include <gdkmm/pixbuf.h>
+#include <gtkmm/drawingarea.h>
+#include <cairomm/context.h>
 
 /**
  * @class Histogram

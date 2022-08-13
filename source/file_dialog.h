@@ -1,7 +1,9 @@
 #ifndef FILE_DIALOG_H
 #define FILE_DIALOG_H
 
-#include <gtkmm.h>
+#include <gtkmm/window.h>
+#include <gtkmm/filechooser.h>
+#include <gtkmm/filechoosernative.h>
 
 class FileDialog
 {

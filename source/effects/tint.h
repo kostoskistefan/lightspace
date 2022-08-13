@@ -1,7 +1,7 @@
 #ifndef TINT_H
 #define TINT_H
 
-#include "../image.h"
+#include "../types/image.h"
 
 namespace Tint
 {

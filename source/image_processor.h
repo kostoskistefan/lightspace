@@ -1,8 +1,8 @@
 #ifndef IMAGE_PROCESSOR_H
 #define IMAGE_PROCESSOR_H
 
-#include <gtkmm.h>
-#include "effect.h"
+#include <gdkmm/pixbuf.h>
+#include "types/effect.h"
 
 class ImageProcessor
 {
