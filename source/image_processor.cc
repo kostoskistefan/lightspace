@@ -3,6 +3,7 @@
 #include "effects/contrast.h"
 #include "effects/exposure.h"
 #include "effects/saturation.h"
+#include "effects/brightness.h"
 #include "effects/temperature.h"
 
 ImageProcessor::ImageProcessor() {}
@@ -45,7 +46,10 @@ void ImageProcessor::process_image(std::vector<effect_t> effects)
 
     for (auto effect : effects)
     {
-        if (effect.name == "exposure")
+        if (effect.name == "brightness")
+            Brightness::apply(image, effect.amount);
+
+        else if (effect.name == "exposure")
             Exposure::apply(image, effect.amount);
         
         else if (effect.name == "contrast")
