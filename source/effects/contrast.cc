@@ -2,7 +2,7 @@
 
 void Contrast::apply(Image &image, double amount)
 {
-    if (!image.is_valid())
+    if (!image.is_valid() || amount == 0)
         return;
 
     float factor = (259 * (amount + 255)) / (255 * (259 - amount));

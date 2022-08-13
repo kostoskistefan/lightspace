@@ -2,7 +2,7 @@
 
 void Exposure::apply(Image &image, double amount)
 {
-    if (!image.is_valid())
+    if (!image.is_valid() || amount == 0)
         return;
 
     double value = pow(2, amount);
