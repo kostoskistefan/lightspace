@@ -7,7 +7,7 @@ OBJECT_DIR := obj
 SOURCE_FILES := $(shell find $(SOURCE_DIR) -name "*.cc")
 OBJECT_FILES := $(patsubst $(SOURCE_DIR)/%.cc, $(OBJECT_DIR)/%.o, $(SOURCE_FILES))
 
-CFLAGS := $(shell pkg-config --cflags --libs gtkmm-4.0) \
+CFLAGS := $(shell pkg-config --cflags --libs gtkmm-4.0)\
 		  -lm -fopenmp -Wall -Wextra -Werror -pedantic
 
 all: resources $(OBJECT_FILES) 

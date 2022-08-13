@@ -7,7 +7,7 @@
  * @class RgbPixel 
  * @brief Class to store pixel data in RGB format.
  */
-class RgbPixel : public virtual Pixel
+class RgbPixel : public virtual Pixel<uint8_t>
 {
 public:
     /**
@@ -15,7 +15,7 @@ public:
      * @see RgbPixel(uint8_t *data)
      * @see RgbPixel(uint8_t c1, uint8_t c2, uint8_t c3)
      */
-    RgbPixel() : Pixel() {}
+    RgbPixel() : Pixel(255) {}
 
     /**
      * @brief Create a new RGB pixel from an array of pixel data.
@@ -23,7 +23,7 @@ public:
      * @see RgbPixel()
      * @see RgbPixel(uint8_t c1, uint8_t c2, uint8_t c3)
      */
-    RgbPixel(uint8_t *data) : Pixel(data) {}
+    RgbPixel(uint8_t *data) : Pixel(data, 255) {}
 
     /**
      * @brief Create a new RGB pixel with the given values.
@@ -33,7 +33,7 @@ public:
      * @see RgbPixel()
      * @see RgbPixel(uint8_t *data)
      */
-    RgbPixel(uint8_t c1, uint8_t c2, uint8_t c3) : Pixel(c1, c2, c3) {}
+    RgbPixel(uint8_t c1, uint8_t c2, uint8_t c3) : Pixel(c1, c2, c3, 255) {}
 
     /**
      * @brief Get the value of the red channel.

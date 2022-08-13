@@ -6,9 +6,11 @@
 /**
  * @class Pixel
  * @brief Class to store pixel data.
+ * @tparam T The type of the pixel data (either uint8_t or double).
  * @note This class is only used as a base class for other
  * types of pixel classes and should not be used directly.
  */
+template <typename T>
 class Pixel
 {
 public:
@@ -38,38 +40,40 @@ public:
      * @param channel The channel to get.
      * @return A reference to the particular channel.
      */
-    uint8_t &operator[](int channel);
+    T &operator[](int channel);
 
 protected:
     /**
      * @brief Create a new pixel with all values initialized to 0.
-     * @see Pixel(uint8_t *data)
-     * @see Pixel(uint8_t c1, uint8_t c2, uint8_t c3)
+     * @param maxValue The maximum value that a pixel can have.
+     * @see Pixel(T *data, T maxValue)
+     * @see Pixel(T c1, T c2, T c3, T maxValue)
      */
-    Pixel();
+    Pixel(T maxValue);
 
     /**
-     * @brief Create a new pixel from an array of pixel data.
+     * @brief Create a new pixel from a pixel data array.
      * @param data The data of the pixel (the 3 channels as an array).
-     * @see Pixel()
-     * @see Pixel(uint8_t c1, uint8_t c2, uint8_t c3)
+     * @param maxValue The maximum value that a pixel can have.
+     * @see Pixel(T maxValue)
+     * @see Pixel(T c1, T c2, T c3, T maxValue)
      */
-    Pixel(uint8_t *data);
+    Pixel(T *data, T maxValue);
 
     /**
-     * @brief Create a new pixel with the given values.
+     * @brief Create a new pixel with given values for each channel.
      * @param c1 The value of the first channel.
      * @param c2 The value of the second channel.
      * @param c3 The value of the third channel.
-     * @see Pixel()
-     * @see Pixel(uint8_t *data)
+     * @param maxValue The maximum value that a pixel can have.
+     * @see Pixel(T maxValue)
+     * @see Pixel(T *data, T maxValue)
      */
-    Pixel(uint8_t c1, uint8_t c2, uint8_t c3);
+    Pixel(T c1, T c2, T c3, T maxValue);
 
 private:
-    // The size is uint8_t because currently
-    // Gdk::Pixbuf only supports 8-bit color depth.
-    uint8_t *data;
+    T *data;
+    T maxValue;
 };
 
 #endif // RAW_PIXEL_H
