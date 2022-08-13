@@ -45,6 +45,7 @@ void set_context_color_from_channel(const Cairo::RefPtr<Cairo::Context> &cr, int
 
 void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, int height)
 {
+    // TODO: Fix the height scaling for different image sizes
     cr->translate(0.0f, height);
     cr->scale(1.0f, -2.0f);
 
