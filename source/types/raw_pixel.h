@@ -71,6 +71,8 @@ protected:
      */
     Pixel(T c1, T c2, T c3, T maxValue);
 
+    Pixel(Pixel &other);
+
 private:
     T *data;
     T maxValue;

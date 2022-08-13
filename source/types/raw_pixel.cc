@@ -33,6 +33,16 @@ Pixel<T>::Pixel(T c1, T c2, T c3, T maxValue)
 }
 
 template <typename T>
+Pixel<T>::Pixel(Pixel<T> &other)
+{
+    this->data = new T[3];
+    this->data[0] = other.data[0];
+    this->data[1] = other.data[1];
+    this->data[2] = other.data[2];
+    this->maxValue = other.maxValue;
+}
+
+template <typename T>
 Pixel<T> &Pixel<T>::operator=(const Pixel<T> &other)
 {
     this->data[0] = other.data[0];
