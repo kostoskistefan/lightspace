@@ -77,7 +77,7 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
         for (uint32_t i = 0; i < histogramData.get_channel_size(); i++)
         {
             cr->move_to(i * scaleX, 0);
-            cr->line_to(i * scaleX, (float) histogramData.at(channel, i) / histogramData.get_channel_size());
+            cr->line_to(i * scaleX, (float)histogramData.at(channel, i) / histogramData.get_channel_size());
         }
 
         cr->stroke();

@@ -1,21 +1,24 @@
 #include "histogram_data.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 HistogramData::HistogramData(Image &image)
 {
+    int channelSize = (1 << image.bitsPerSample);
     this->image = image;
-    this->size = image.channels * (1 << image.bitsPerSample);
+    this->size = image.channels * channelSize;
     this->data = new uint32_t[size]{0};
 
+#ifdef _OPENMP
+#pragma omp parallel for collapse(2)
+#endif
+
     for (uint8_t channel = 0; channel < image.channels; channel++)
-    {
         for (uint16_t y = 0; y < image.height; y++)
-        {
             for (uint16_t x = 0; x < image.width; x++)
-            {
-                this->data[channel * (1 << image.bitsPerSample) + image.at(x, y, channel)]++;
-            }
-        }
-    }
+                this->data[channel * channelSize + image.at(x, y, channel)]++;
 }
 
 HistogramData::~HistogramData()

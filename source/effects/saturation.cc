@@ -1,10 +1,18 @@
 #include "saturation.h"
 #include "../color_space.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 void Saturation::apply(Image &image, double amount)
 {
     if (!image.is_valid() || amount == 1)
         return;
+
+#ifdef _OPENMP
+#pragma omp parallel for collapse(2)
+#endif
 
     for (int y = 0; y < image.height; y++)
     {
@@ -12,7 +20,7 @@ void Saturation::apply(Image &image, double amount)
         {
             RgbPixel pixel = image.at(x, y);
             HsbPixel hsb;
-                
+
             // Convert pixel to HSB
             ColorSpace::rgb_to_hsb(pixel, hsb);
 

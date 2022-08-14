@@ -1,6 +1,10 @@
 #include "convolution.h"
 
-void convolve(Image image, Kernel kernel)
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+void convolve(Image &image, Kernel &kernel)
 {
     // Convolution based on http://www.songho.ca/dsp/convolution/convolution2d_example.html
 
@@ -10,6 +14,10 @@ void convolve(Image image, Kernel kernel)
 
     // Get the center of the kernel.
     int center = (kernel.get_size() - 1) / 2;
+
+#ifdef _OPENMP
+#pragma omp parallel for collapse(3)
+#endif
 
     for (int channel = 0; channel < image.channels; channel++)
     {
@@ -51,7 +59,7 @@ void convolve(Image image, Kernel kernel)
         }
     }
 
-    delete buffer.pixels;
-
     image.copy_pixels(buffer);
+    
+    delete buffer.pixels;
 }

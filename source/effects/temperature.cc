@@ -1,10 +1,18 @@
 #include "temperature.h"
 #include "../types/rgb_pixel.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 void Temperature::apply(Image &image, double amount)
 {
     if (!image.is_valid() || amount == 0)
         return;
+
+#ifdef _OPENMP
+#pragma omp parallel for collapse(2)
+#endif
 
     for (int y = 0; y < image.height; y++)
     {

@@ -1,5 +1,9 @@
 #include "image.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 Image::Image()
 {
     this->width = 0;
@@ -66,6 +70,10 @@ uint8_t &Image::at(uint16_t x, uint16_t y, uint8_t channel)
 
 void Image::copy_pixels(Image &image)
 {
+#ifdef _OPENMP
+#pragma omp parallel for collapse(2)
+#endif
+
     for (int x = 0; x < image.width; x++)
         for (int y = 0; y < image.height; y++)
             this->at(x, y) = image.at(x, y);
