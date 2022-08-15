@@ -78,3 +78,8 @@ void Image::copy_pixels(Image &image)
         for (int y = 0; y < image.height; y++)
             this->at(x, y) = image.at(x, y);
 }
+
+uint32_t Image::get_colors_per_pixel()
+{
+    return (1 << this->bitsPerSample);
+}

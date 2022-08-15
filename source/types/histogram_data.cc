@@ -6,9 +6,9 @@
 
 HistogramData::HistogramData(Image &image)
 {
-    int channelSize = (1 << image.bitsPerSample);
+    int colorsPerPixel = image.get_colors_per_pixel();
     this->image = image;
-    this->size = image.channels * channelSize;
+    this->size = image.channels * colorsPerPixel;
     this->data = new uint32_t[size]{0};
 
 #ifdef _OPENMP
@@ -18,7 +18,7 @@ HistogramData::HistogramData(Image &image)
     for (uint8_t channel = 0; channel < image.channels; channel++)
         for (uint16_t y = 0; y < image.height; y++)
             for (uint16_t x = 0; x < image.width; x++)
-                this->data[channel * channelSize + image.at(x, y, channel)]++;
+                this->data[channel * colorsPerPixel + image.at(x, y, channel)]++;
 }
 
 HistogramData::~HistogramData()
@@ -44,9 +44,4 @@ uint32_t *HistogramData::get_data()
 uint32_t HistogramData::get_size()
 {
     return this->size;
-}
-
-uint32_t HistogramData::get_channel_size()
-{
-    return (1 << this->image.bitsPerSample);
 }

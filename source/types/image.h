@@ -79,6 +79,12 @@ public:
      */
     void copy_pixels(Image &image);
 
+    /**
+     * @brief Get the number of colors each pixel can display (2 ^ bits per sample).
+     * @return The number of colors each pixel can display.
+     */
+    uint32_t get_colors_per_pixel();
+
     uint8_t *pixels;
     uint16_t width;
     uint16_t height;

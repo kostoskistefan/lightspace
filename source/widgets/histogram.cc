@@ -45,13 +45,7 @@ void set_context_color_from_channel(const Cairo::RefPtr<Cairo::Context> &cr, int
 
 void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, int height)
 {
-    // TODO: Fix the height scaling for different image sizes
-    cr->translate(0.0f, height);
-    cr->scale(1.0f, -2.0f);
-
     cr->set_source_rgba(0, 0, 0, 0.1f);
-    cr->set_line_width(width / 200.0f);
-    cr->set_line_cap(Cairo::Context::LineCap::ROUND);
     cr->paint();
 
     if (this->pixbuf == nullptr)
@@ -63,8 +57,11 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
         return;
 
     HistogramData histogramData(image);
+    uint32_t colorsPerPixel = image.get_colors_per_pixel();
 
-    double scaleX = 1.0 / histogramData.get_channel_size() * width;
+    // TODO: Fix the height scaling for different image sizes
+    cr->translate(0.0f, height);
+    cr->scale(1.0 / colorsPerPixel * width, -2.0f);
 
     for (uint8_t channel = 0; channel < image.channels; channel++)
     {
@@ -74,10 +71,10 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
         else
             set_context_color_from_channel(cr, channel);
 
-        for (uint32_t i = 0; i < histogramData.get_channel_size(); i++)
+        for (uint32_t i = 0; i < colorsPerPixel; i++)
         {
-            cr->move_to(i * scaleX, 0);
-            cr->line_to(i * scaleX, (float)histogramData.at(channel, i) / histogramData.get_channel_size());
+            cr->move_to(i, 0);
+            cr->line_to(i, (float)histogramData.at(channel, i) / colorsPerPixel);
         }
 
         cr->stroke();
