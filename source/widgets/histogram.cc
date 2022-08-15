@@ -6,6 +6,9 @@ Histogram::Histogram()
     this->set_draw_func(sigc::mem_fun(*this, &Histogram::on_draw));
     this->set_size_request(200, 125);
     this->set_hexpand(true);
+
+    this->image = nullptr;
+    this->histogramData = nullptr;
 }
 
 void Histogram::set_pixbuf(const std::shared_ptr<Gdk::Pixbuf> &pixbuf)
