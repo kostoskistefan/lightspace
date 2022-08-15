@@ -41,6 +41,7 @@ protected:
 
 private:
     std::shared_ptr<Gdk::Pixbuf> pixbuf;
+    uint32_t highestValue = 0;
 };
 
 #endif // HISTOGRAM_H

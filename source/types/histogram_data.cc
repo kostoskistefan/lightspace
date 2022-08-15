@@ -45,3 +45,14 @@ uint32_t HistogramData::get_size()
 {
     return this->size;
 }
+
+uint32_t HistogramData::get_highest_value()
+{
+    uint32_t highestValue = 0;
+
+    for (uint32_t i = 0; i < this->size; i++)
+        if (this->data[i] > highestValue)
+            highestValue = this->data[i];
+
+    return highestValue;
+}

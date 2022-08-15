@@ -12,7 +12,9 @@ Histogram::Histogram()
 
 void Histogram::set_pixbuf(const std::shared_ptr<Gdk::Pixbuf> &pixbuf)
 {
+    g_assert(pixbuf != nullptr);
     this->pixbuf = pixbuf;
+    this->highestValue = 0;
 }
 
 Histogram::~Histogram() {}
@@ -57,11 +59,14 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
         return;
 
     HistogramData histogramData(image);
+
+    if (this->highestValue == 0)
+        this->highestValue = histogramData.get_highest_value();
+
     uint32_t colorsPerPixel = image.get_colors_per_pixel();
 
-    // TODO: Fix the height scaling for different image sizes
     cr->translate(0.0f, height);
-    cr->scale(1.0 / colorsPerPixel * width, -2.0f);
+    cr->scale(1.0 / colorsPerPixel * width, -height / (float) highestValue);
 
     for (uint8_t channel = 0; channel < image.channels; channel++)
     {
@@ -74,7 +79,7 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
         for (uint32_t i = 0; i < colorsPerPixel; i++)
         {
             cr->move_to(i, 0);
-            cr->line_to(i, (float)histogramData.at(channel, i) / colorsPerPixel);
+            cr->line_to(i, histogramData.at(channel, i));
         }
 
         cr->stroke();

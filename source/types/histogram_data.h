@@ -55,6 +55,8 @@ public:
      */
     uint32_t get_size();
 
+    uint32_t get_highest_value();
+
 private:
     Image image;
     uint32_t *data;
