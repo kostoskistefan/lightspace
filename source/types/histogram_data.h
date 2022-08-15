@@ -55,12 +55,6 @@ public:
      */
     uint32_t get_size();
 
-    /**
-     * @brief Get the size of a single channel from histogram data.
-     * @return The size of a single channel from histogram data.
-     */
-    uint32_t get_channel_size();
-
 private:
     Image image;
     uint32_t *data;
