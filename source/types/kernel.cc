@@ -3,12 +3,12 @@
 Kernel::Kernel(uint8_t size)
 {
     this->size = size;
-    this->data = new float[size * size];
+    this->data = new float[size * size]{0};
 }
 
 Kernel::~Kernel()
 {
-    delete this->data;
+    delete[] this->data;
 }
 
 float &Kernel::at(uint8_t x, uint8_t y)

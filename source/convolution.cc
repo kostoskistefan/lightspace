@@ -61,5 +61,5 @@ void convolve(Image &image, Kernel &kernel)
 
     image.copy_pixels(buffer);
     
-    delete buffer.pixels;
+    delete[] buffer.pixels;
 }

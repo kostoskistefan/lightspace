@@ -23,7 +23,7 @@ HistogramData::HistogramData(Image &image)
 
 HistogramData::~HistogramData()
 {
-    delete this->data;
+    delete[] this->data;
 }
 
 uint32_t *HistogramData::at(uint8_t channel)
