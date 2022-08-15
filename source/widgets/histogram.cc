@@ -1,6 +1,4 @@
 #include "histogram.h"
-#include "../types/image.h"
-#include "../types/histogram_data.h"
 #include <cstdlib>
 
 Histogram::Histogram()
@@ -11,10 +9,14 @@ Histogram::Histogram()
 }
 
 void Histogram::set_pixbuf(const std::shared_ptr<Gdk::Pixbuf> &pixbuf)
-{
-    g_assert(pixbuf != nullptr);
-    this->pixbuf = pixbuf;
-    this->highestValue = 0;
+{    
+    g_return_if_fail(pixbuf != nullptr);
+
+    this->image = new Image(pixbuf);
+
+    g_return_if_fail(this->image->is_valid());
+
+    this->histogramData = new HistogramData(*this->image);
 }
 
 Histogram::~Histogram() {}
@@ -50,27 +52,21 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
     cr->set_source_rgba(0, 0, 0, 0.1f);
     cr->paint();
 
-    if (this->pixbuf == nullptr)
+    if (this->image == nullptr || !this->image->is_valid())
         return;
 
-    Image image(this->pixbuf);
+    histogramData->update();
 
-    if (!image.is_valid())
-        return;
-
-    HistogramData histogramData(image);
-
-    if (this->highestValue == 0)
-        this->highestValue = histogramData.get_highest_value();
-
-    uint32_t colorsPerPixel = image.get_colors_per_pixel();
+    uint32_t colorsPerPixel = this->image->get_colors_per_pixel();
 
     cr->translate(0.0f, height);
-    cr->scale(1.0 / colorsPerPixel * width, -height / (float) highestValue);
+    cr->scale(
+        1.0 / colorsPerPixel * width,
+        -height / (float)this->histogramData->get_highest_value());
 
-    for (uint8_t channel = 0; channel < image.channels; channel++)
+    for (uint8_t channel = 0; channel < this->image->channels; channel++)
     {
-        if (image.channels == 1)
+        if (this->image->channels == 1)
             set_context_color_from_channel(cr, -1);
 
         else
@@ -79,7 +75,7 @@ void Histogram::on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, in
         for (uint32_t i = 0; i < colorsPerPixel; i++)
         {
             cr->move_to(i, 0);
-            cr->line_to(i, histogramData.at(channel, i));
+            cr->line_to(i, this->histogramData->at(channel, i));
         }
 
         cr->stroke();

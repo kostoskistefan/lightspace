@@ -4,6 +4,8 @@
 #include <gdkmm/pixbuf.h>
 #include <gtkmm/drawingarea.h>
 #include <cairomm/context.h>
+#include "../types/image.h"
+#include "../types/histogram_data.h"
 
 /**
  * @class Histogram
@@ -40,8 +42,8 @@ protected:
     void on_draw(const std::shared_ptr<Cairo::Context> &cr, int width, int height);
 
 private:
-    std::shared_ptr<Gdk::Pixbuf> pixbuf;
-    uint32_t highestValue = 0;
+    Image *image;
+    HistogramData *histogramData;
 };
 
 #endif // HISTOGRAM_H

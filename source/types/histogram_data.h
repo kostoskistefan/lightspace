@@ -55,12 +55,22 @@ public:
      */
     uint32_t get_size();
 
+    /**
+     * @brief Get the highest value in the histogram data.
+     * @return The highest value in the histogram data.
+     */
     uint32_t get_highest_value();
+
+    /**
+     * @brief Update the data in the histogram.
+     */
+    void update();
 
 private:
     Image image;
     uint32_t *data;
     uint32_t size;
+    uint32_t highestValue;
 };
 
 #endif // HISTOGRAM_DATA_H
