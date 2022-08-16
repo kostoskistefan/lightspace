@@ -11,8 +11,6 @@ FileDialog::FileDialog(Gtk::Window *parent)
     this->set_filter();
 }
 
-FileDialog::~FileDialog() {}
-
 void FileDialog::emit_signal_based_on_response(int response)
 {
     this->dialog->hide();

@@ -1,6 +1,8 @@
 #include "lightspace_window.h"
 #include "utilities.h"
 #include "parsers/effects_parser.h"
+#include <gtkmm/cssprovider.h>
+#include <gtkmm/eventcontrollerkey.h>
 
 LightspaceWindow::LightspaceWindow(
 	BaseObjectType *cobject,
@@ -52,9 +54,6 @@ void LightspaceWindow::map_signals()
 	fileDialog->signal_dialog_success().connect(
 		sigc::mem_fun(*this, &LightspaceWindow::on_file_dialog_success));
 
-	this->effectsTextView->get_buffer()->signal_changed().connect(
-		sigc::mem_fun(*this, &LightspaceWindow::on_effects_text_view_changed));
-
 	this->applyEffectsButton->signal_clicked().connect(
 		sigc::mem_fun(*this, &LightspaceWindow::on_apply_effects_button_clicked));
 
@@ -99,13 +98,6 @@ void LightspaceWindow::set_title_from_filepath(const std::string &path)
 	this->set_title(Utilities::get_filename_from_path(path) + " - Lightspace");
 }
 
-void LightspaceWindow::on_effects_text_view_changed()
-{
-	bool textViewHasText = this->effectsTextView->get_buffer()->get_text().empty();
-
-	this->applyEffectsButton->set_sensitive(!textViewHasText);
-}
-
 void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileChooser::Action action)
 {
 	if (action == Gtk::FileChooser::Action::OPEN)
@@ -129,7 +121,7 @@ void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileCho
 	}
 }
 
-bool LightspaceWindow::on_key_pressed(guint keyval, guint, Gdk::ModifierType state)
+bool LightspaceWindow::on_key_pressed(uint keyval, uint, Gdk::ModifierType state)
 {
 	(void)state;
 

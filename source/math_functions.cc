@@ -1,10 +1,10 @@
-#include "convolution.h"
+#include "math_functions.h"
 
 #ifdef _OPENMP
 #include <omp.h>
 #endif
 
-void convolve(Image &image, Kernel &kernel)
+void MathFunctions::convolve(Image &image, Kernel &kernel)
 {
     // Convolution based on http://www.songho.ca/dsp/convolution/convolution2d_example.html
 

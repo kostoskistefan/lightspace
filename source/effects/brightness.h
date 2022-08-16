@@ -3,8 +3,17 @@
 
 #include "../types/image.h"
 
+/**
+ * @namespace Brightness
+ * @brief Add brightness effect to an image.
+ */
 namespace Brightness
 {
+    /**
+     * @brief Apply brightness to the image.
+     * @param image The image to add the effect to.
+     * @param brightness The amount of brightness to apply in range [-100, 100].
+     */
     void apply(Image &image, double amount);
 }
 

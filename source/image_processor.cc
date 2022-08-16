@@ -70,7 +70,6 @@ void ImageProcessor::process_image(std::vector<effect_t> effects)
 
 void ImageProcessor::save_image(std::string filePath, std::string format)
 {
-    // TODO: Add more save formats and parameters like "quality"
     this->pixbuf->save(filePath, format);
 }
 
