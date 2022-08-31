@@ -1,10 +1,5 @@
 #include "image_processor.h"
-#include "effects/tint.h"
-#include "effects/contrast.h"
-#include "effects/exposure.h"
-#include "effects/saturation.h"
-#include "effects/brightness.h"
-#include "effects/temperature.h"
+#include "effects/effects.h"
 
 ImageProcessor::ImageProcessor() {}
 
@@ -44,26 +39,7 @@ void ImageProcessor::process_image(std::vector<effect_t> effects)
 
     Image image(this->pixbuf);
 
-    for (auto effect : effects)
-    {
-        if (effect.name == "brightness")
-            Brightness::apply(image, effect.amount);
-
-        else if (effect.name == "exposure")
-            Exposure::apply(image, effect.amount);
-        
-        else if (effect.name == "contrast")
-            Contrast::apply(image, effect.amount);
-
-        else if (effect.name == "saturation")
-            Saturation::apply(image, effect.amount);
-        
-        else if (effect.name == "temperature")
-            Temperature::apply(image, effect.amount);
-        
-        else if (effect.name == "tint")
-            Tint::apply(image, effect.amount);
-    }
+    Effects::apply(image, effects);
 
     this->signalProcessingChanged.emit();
 }

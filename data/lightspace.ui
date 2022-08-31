@@ -126,7 +126,6 @@
                                         <child>
                                             <object class="GtkButton" id="apply_effects_button">
                                                 <property name="label" translatable="1">Apply</property>
-                                                <property name="sensitive">False</property>
                                                 <property name="margin-end">3</property>
                                                 <property name="hexpand">1</property>
                                                 <property name="action-name">app.apply_effects</property>

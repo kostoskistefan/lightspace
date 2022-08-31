@@ -63,3 +63,38 @@ void MathFunctions::convolve(Image &image, Kernel &kernel)
     
     delete[] buffer.pixels;
 }
+
+double MathFunctions::adjust_blacks(double brightness, double amount, int curveStrength)
+{
+    /*
+    Curve Function:
+
+                -kx
+    f(x) = ------------- + 1
+            1 + (k-1)x
+    
+    k = curve strength
+    x = brightness of the pixel
+    */
+    double multiplier = ((-curveStrength * brightness) / (1 + ((curveStrength - 1) * brightness))) + 1;
+
+    return CLAMP(brightness + (multiplier * amount), 0, 1);
+}
+
+double MathFunctions::adjust_whites(double brightness, double amount, int curveStrength)
+{
+    /*
+    Curve Function:
+    
+                k(x-1)
+    f(x) = --------------- + 1
+            1 - (k-1)(x-1)
+    
+    k = curve strength
+    x = brightness of the pixel
+    */
+
+    double multiplier = ((curveStrength * (brightness - 1)) / (1 - ((curveStrength - 1) * (brightness - 1)))) + 1;
+
+    return CLAMP(brightness + (multiplier * amount), 0, 1);
+}

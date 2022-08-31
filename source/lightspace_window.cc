@@ -50,12 +50,10 @@ void LightspaceWindow::map_signals()
 	app->add_action("export_image", sigc::mem_fun(*fileDialog, &FileDialog::export_file_dialog));
 	app->add_action("toggle_dual_view", sigc::mem_fun(*this, &LightspaceWindow::toggle_dual_view));
 	app->add_action("toggle_before_after", sigc::mem_fun(*this, &LightspaceWindow::toggle_before_after));
+	app->add_action("apply_effects", sigc::mem_fun(*this, &LightspaceWindow::on_apply_effects_button_clicked));
 
 	fileDialog->signal_dialog_success().connect(
 		sigc::mem_fun(*this, &LightspaceWindow::on_file_dialog_success));
-
-	this->applyEffectsButton->signal_clicked().connect(
-		sigc::mem_fun(*this, &LightspaceWindow::on_apply_effects_button_clicked));
 
     this->imageProcessor->signal_processing_changed().connect(
             sigc::mem_fun(*this->histogram, &Histogram::queue_draw));

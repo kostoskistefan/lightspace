@@ -12,7 +12,7 @@ namespace Temperature
     /**
      * @brief Apply temperature to the image.
      * @param image The image to add the effect to.
-     * @param temperature The amount of temperature to apply in range [-100, 100].
+     * @param amount The amount of temperature to apply in range [-100, 100].
      */
     void apply(Image &image, double amount);
 }
