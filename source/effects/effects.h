@@ -10,8 +10,8 @@
 #include "saturation.h"
 #include "brightness.h"
 #include "temperature.h"
-#include "whites.h"
-#include "blacks.h"
+#include "shadows.h"
+#include "highlights.h"
 
 /**
  * @namespace Effects

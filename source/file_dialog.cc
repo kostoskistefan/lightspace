@@ -28,6 +28,7 @@ void FileDialog::set_filter()
     auto filterImages = Gtk::FileFilter::create();
     filterImages->set_name("JPG Files");
     filterImages->add_mime_type("image/jpeg");
+    filterImages->add_mime_type("image/png");
 
     this->dialog->set_filter(filterImages);
 }

@@ -1,10 +1,11 @@
-#include "math_functions.h"
+#include "kernel_functions.h"
+#include <cmath>
 
 #ifdef _OPENMP
 #include <omp.h>
 #endif
 
-void MathFunctions::convolve(Image &image, Kernel &kernel)
+void KernelFunctions::convolve(Image &image, Kernel &kernel)
 {
     // Convolution based on http://www.songho.ca/dsp/convolution/convolution2d_example.html
 
@@ -62,39 +63,4 @@ void MathFunctions::convolve(Image &image, Kernel &kernel)
     image.copy_pixels(buffer);
     
     delete[] buffer.pixels;
-}
-
-double MathFunctions::adjust_blacks(double brightness, double amount, int curveStrength)
-{
-    /*
-    Curve Function:
-
-                -kx
-    f(x) = ------------- + 1
-            1 + (k-1)x
-    
-    k = curve strength
-    x = brightness of the pixel
-    */
-    double multiplier = ((-curveStrength * brightness) / (1 + ((curveStrength - 1) * brightness))) + 1;
-
-    return CLAMP(brightness + (multiplier * amount), 0, 1);
-}
-
-double MathFunctions::adjust_whites(double brightness, double amount, int curveStrength)
-{
-    /*
-    Curve Function:
-    
-                k(x-1)
-    f(x) = --------------- + 1
-            1 - (k-1)(x-1)
-    
-    k = curve strength
-    x = brightness of the pixel
-    */
-
-    double multiplier = ((curveStrength * (brightness - 1)) / (1 - ((curveStrength - 1) * (brightness - 1)))) + 1;
-
-    return CLAMP(brightness + (multiplier * amount), 0, 1);
 }

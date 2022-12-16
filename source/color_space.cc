@@ -1,5 +1,6 @@
 #include "color_space.h"
 #include <cmath>
+#include <gtkmm.h>
 
 #define MIN(a, b)  (((a) < (b)) ? (a) : (b))
 #define MAX(a, b)  (((a) > (b)) ? (a) : (b))
@@ -64,35 +65,49 @@ void ColorSpace::hsb_to_rgb(HsbPixel &hsb, RgbPixel &rgb)
 
     switch (i)
     {
-    case 0:
-        rgb.r() = hsb.b();
-        rgb.g() = t;
-        rgb.b() = p;
-        break;
-    case 1:
-        rgb.r() = q;
-        rgb.g() = hsb.b();
-        rgb.b() = p;
-        break;
-    case 2:
-        rgb.r() = p;
-        rgb.g() = hsb.b();
-        rgb.b() = t;
-        break;
-    case 3:
-        rgb.r() = p;
-        rgb.g() = q;
-        rgb.b() = hsb.b();
-        break;
-    case 4:
-        rgb.r() = t;
-        rgb.g() = p;
-        rgb.b() = hsb.b();
-        break;
-    case 5:
-        rgb.r() = hsb.b();
-        rgb.g() = p;
-        rgb.b() = q;
-        break;
+        case 0:
+            rgb.r() = hsb.b();
+            rgb.g() = t;
+            rgb.b() = p;
+            break;
+        case 1:
+            rgb.r() = q;
+            rgb.g() = hsb.b();
+            rgb.b() = p;
+            break;
+        case 2:
+            rgb.r() = p;
+            rgb.g() = hsb.b();
+            rgb.b() = t;
+            break;
+        case 3:
+            rgb.r() = p;
+            rgb.g() = q;
+            rgb.b() = hsb.b();
+            break;
+        case 4:
+            rgb.r() = t;
+            rgb.g() = p;
+            rgb.b() = hsb.b();
+            break;
+        case 5:
+            rgb.r() = hsb.b();
+            rgb.g() = p;
+            rgb.b() = q;
+            break;
     }
+}
+
+void ColorSpace::rgb_to_ycbcr(RgbPixel &rgb, YCbCrPixel &ycbcr)
+{
+    ycbcr.y()  =     0.299 * rgb.r() +    0.587 * rgb.g() +    0.114 * rgb.b();
+    ycbcr.cb() = -0.168736 * rgb.r() - 0.331264 * rgb.g() +      0.5 * rgb.b();
+    ycbcr.cr() =       0.5 * rgb.r() - 0.418688 * rgb.g() - 0.081312 * rgb.b();
+}
+
+void ColorSpace::ycbcr_to_rgb(YCbCrPixel &ycbcr, RgbPixel &rgb)
+{
+    rgb.r() = CLAMP(std::round(ycbcr.y() +                            1.402 * ycbcr.cr()), 0, 255);
+    rgb.g() = CLAMP(std::round(ycbcr.y() - 0.344136 * ycbcr.cb() - 0.714136 * ycbcr.cr()), 0, 255);
+    rgb.b() = CLAMP(std::round(ycbcr.y() +    1.772 * ycbcr.cb()                        ), 0, 255);
 }

@@ -22,10 +22,10 @@ void Effects::apply(Image &image, std::vector<effect_t> effects)
         else if (effect.name == "tint")
             Tint::apply(image, effect.amount);
 
-        else if (effect.name == "whites")
-            Whites::apply(image, effect.amount);
+        else if (effect.name == "shadows")
+            Shadows::apply(image, effect.amount);
 
-        else if (effect.name == "blacks")
-            Blacks::apply(image, effect.amount);
+        else if (effect.name == "highlights")
+            Highlights::apply(image, effect.amount);
     }
 }
