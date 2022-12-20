@@ -5,12 +5,12 @@
 #include <gtkmm/eventcontrollerkey.h>
 
 LightspaceWindow::LightspaceWindow(
-	BaseObjectType *cobject,
-	const std::shared_ptr<Gtk::Builder> &builder)
+		BaseObjectType *cobject,
+		const std::shared_ptr<Gtk::Builder> &builder)
 	: Gtk::ApplicationWindow(cobject), builder(builder)
 {
 	this->imageProcessor = new ImageProcessor();
-    this->histogram = new Histogram();
+	this->histogram = new Histogram();
 
 	this->imageView = builder->get_widget<Gtk::Picture>("image_view");
 	this->originalImageView = builder->get_widget<Gtk::Picture>("original_image_view");
@@ -24,10 +24,11 @@ LightspaceWindow::LightspaceWindow(
 	this->toggleDualViewButton = builder->get_widget<Gtk::ToggleButton>("toggle_dual_view_button");
 	this->toggleBeforeAfterButton = builder->get_widget<Gtk::ToggleButton>("toggle_before_after_button");
 
-    this->histogramBox = builder->get_widget<Gtk::Box>("histogram_box");
-    this->histogramBox->insert_child_at_start(*this->histogram);
+	this->histogramBox = builder->get_widget<Gtk::Box>("histogram_box");
+	this->histogramBox->insert_child_at_start(*this->histogram);
 
 	map_signals();
+	setup_keymap();
 	load_style_sheet();
 }
 
@@ -37,7 +38,7 @@ void LightspaceWindow::load_style_sheet()
 	provider->load_from_resource("/com/github/kostoskistefan/lightspace/lightspace.css");
 
 	this->get_style_context()->add_provider_for_display(
-		this->get_display(), provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
+			this->get_display(), provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
 
 void LightspaceWindow::map_signals()
@@ -53,16 +54,18 @@ void LightspaceWindow::map_signals()
 	app->add_action("apply_effects", sigc::mem_fun(*this, &LightspaceWindow::on_apply_effects_button_clicked));
 
 	fileDialog->signal_dialog_success().connect(
-		sigc::mem_fun(*this, &LightspaceWindow::on_file_dialog_success));
+			sigc::mem_fun(*this, &LightspaceWindow::on_file_dialog_success));
 
-    this->imageProcessor->signal_processing_changed().connect(
-            sigc::mem_fun(*this->histogram, &Histogram::queue_draw));
+	this->imageProcessor->signal_processing_changed().connect(
+			sigc::mem_fun(*this->histogram, &Histogram::queue_draw));
+}
 
-	// TODO: Move key press controller to a separate function.
+void LightspaceWindow::setup_keymap()
+{
 	auto controller = Gtk::EventControllerKey::create();
 
 	controller->signal_key_pressed().connect(
-		sigc::mem_fun(*this, &LightspaceWindow::on_key_pressed), false);
+			sigc::mem_fun(*this, &LightspaceWindow::on_key_pressed), false);
 
 	this->add_controller(controller);
 }
@@ -82,11 +85,17 @@ void LightspaceWindow::toggle_before_after()
 {
 	auto currentState = !this->toggleBeforeAfterButton->get_active();
 
+	std::shared_ptr<Gdk::Pixbuf> currentlyVisiblePixbuf = nullptr;
+
 	if (currentState)
-		this->imageView->set_pixbuf(this->imageProcessor->copy_original_pixbuf());
+		currentlyVisiblePixbuf = this->imageProcessor->copy_original_pixbuf();
 
 	else
-		this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
+		currentlyVisiblePixbuf = this->imageProcessor->get_processed_pixbuf();
+
+	this->imageView->set_pixbuf(currentlyVisiblePixbuf);
+	this->histogram->set_pixbuf(currentlyVisiblePixbuf);
+	this->histogram->queue_draw();
 
 	this->toggleBeforeAfterButton->set_active(currentState);
 }
@@ -110,13 +119,11 @@ void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileCho
 		this->set_title_from_filepath(filePath);
 
 		this->histogram->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
-        this->histogram->queue_draw();
+		this->histogram->queue_draw();
 	}
 
 	else if (action == Gtk::FileChooser::Action::SAVE)
-	{
 		this->imageProcessor->save_image(filePath, "jpeg");
-	}
 }
 
 bool LightspaceWindow::on_key_pressed(uint keyval, uint, Gdk::ModifierType state)
@@ -125,12 +132,12 @@ bool LightspaceWindow::on_key_pressed(uint keyval, uint, Gdk::ModifierType state
 
 	switch (keyval)
 	{
-	case GDK_KEY_bracketright:
-		this->toggle_dual_view();
-		break;
-	case GDK_KEY_backslash:
-		this->toggle_before_after();
-		break;
+		case GDK_KEY_bracketright:
+			this->toggle_dual_view();
+			break;
+		case GDK_KEY_backslash:
+			this->toggle_before_after();
+			break;
 	}
 
 	return true;
@@ -140,8 +147,11 @@ void LightspaceWindow::on_apply_effects_button_clicked()
 {
 	auto text = this->effectsTextView->get_buffer()->get_text();
 	auto effects = EffectsParser::parse(text);
+
 	this->imageProcessor->process_image(effects);
-	this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
+
+	if (!this->toggleBeforeAfterButton->get_active())
+		this->imageView->set_pixbuf(this->imageProcessor->get_processed_pixbuf());
 }
 
 std::unique_ptr<LightspaceWindow> LightspaceWindow::create()

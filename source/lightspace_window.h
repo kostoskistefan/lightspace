@@ -106,6 +106,13 @@ private:
 	 * @param action The action that was performed (either OPEN or SAVE).
 	 */
 	void on_file_dialog_success(std::string filePath, Gtk::FileChooser::Action action);
+
+	/**
+	 * @brief Creates and sets up a key press listener
+	 * @details Creates an EventControllerKey and connects the callback method to the
+	 * LightspaceWindow::on_key_pressed method
+	 */
+	void setup_keymap();
 };
 
 #endif // LIGHTSPACE_WINDOW_H

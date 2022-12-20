@@ -12,7 +12,7 @@ namespace Highlights
     /**
      * @brief Apply highlight adjustment to the image.
      * @param image The image to add the effect to.
-     * @param amount The amount of highlight adjustment to apply in range [-1, 1].
+     * @param amount The amount of highlight adjustment to apply in range [-100, 100].
      */
     void apply(Image &image, double amount);
 }

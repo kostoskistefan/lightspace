@@ -13,15 +13,17 @@ void Highlights::apply(Image &image, double amount)
     if (!image.is_valid() || amount == 0)
         return;
 
-    const float highlightTone = 255 - 0.5 * 255;
+    const float highlightTone = 255 - 0.4 * 255;
 
     int t[256];
     int lut[256];
 
     std::iota(std::begin(t), std::end(t), 0);
 
+    double exponent = 1 - (amount / 100.0);
+
     for (int i = 0; i < 256; i++)
-        lut[i] = CLAMP(std::round(pow(t[i] * 0.00392156863, 1 - amount) * 255), 0, 255);
+        lut[i] = CLAMP(std::round(pow(t[i] * 0.00392156863, exponent) * 255), 0, 255);
 
 #ifdef _OPENMP
 #pragma omp parallel for collapse(2)
@@ -31,10 +33,10 @@ void Highlights::apply(Image &image, double amount)
     {
         for (int x = 0; x < image.width; x++)
         {
-            RgbPixel rgb = image.at(x, y);
+            RgbPixel pixel = image.at(x, y);
             YCbCrPixel ycbcr;
 
-            ColorSpace::rgb_to_ycbcr(rgb, ycbcr);
+            ColorSpace::rgb_to_ycbcr(pixel, ycbcr);
 
             double highlightBrightness = 255.0 - (255.0 - ycbcr.y()) * 255.0 / (255.0 - highlightTone);
 
@@ -45,7 +47,7 @@ void Highlights::apply(Image &image, double amount)
 
             ycbcr.y() = (1 - highlightBrightness) * ycbcr.y() + highlightBrightness * lut[(int) ycbcr.y()];
 
-            ColorSpace::ycbcr_to_rgb(ycbcr, rgb);
+            ColorSpace::ycbcr_to_rgb(ycbcr, pixel);
         }
     }
 }

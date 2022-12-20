@@ -10,6 +10,8 @@
 #include "saturation.h"
 #include "brightness.h"
 #include "temperature.h"
+#include "blacks.h"
+#include "whites.h"
 #include "shadows.h"
 #include "highlights.h"
 

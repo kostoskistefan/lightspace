@@ -7,8 +7,11 @@
 
 void Saturation::apply(Image &image, double amount)
 {
-    if (!image.is_valid() || amount == 1)
+    if (!image.is_valid() || amount == 0)
         return;
+
+    // Remap range [-100, 100] to [0, 2]
+    amount = (0.01 * amount) + 1;
 
 #ifdef _OPENMP
 #pragma omp parallel for collapse(2)
@@ -21,13 +24,10 @@ void Saturation::apply(Image &image, double amount)
             RgbPixel pixel = image.at(x, y);
             HsbPixel hsb;
 
-            // Convert pixel to HSB
             ColorSpace::rgb_to_hsb(pixel, hsb);
 
-            // Apply saturation
             hsb.s() = CLAMP(hsb.s() * amount, 0, 1);
 
-            // Modify original pixel with new HSB values
             ColorSpace::hsb_to_rgb(hsb, pixel);
         }
     }
