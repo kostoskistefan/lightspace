@@ -27,3 +27,8 @@ void Contrast::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Contrast::create()
+{
+    return std::make_unique<Contrast>();
+}

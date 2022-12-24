@@ -34,3 +34,8 @@ void Whites::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Whites::create()
+{
+    return std::make_unique<Whites>();
+}

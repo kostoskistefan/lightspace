@@ -1,5 +1,5 @@
 #include "image_processor.h"
-#include "effects/effects.h"
+#include "effect_processor.h"
 
 ImageProcessor::ImageProcessor() {}
 
@@ -31,7 +31,7 @@ void ImageProcessor::restore_original_pixels()
     processed.copy_pixels(original);
 }
 
-void ImageProcessor::process_image(std::vector<effect_t> effects)
+void ImageProcessor::process_image(std::vector<std::pair<std::string, double>> &effects)
 {
     g_return_if_fail(this->pixbuf != nullptr);
 
@@ -39,7 +39,7 @@ void ImageProcessor::process_image(std::vector<effect_t> effects)
 
     Image image(this->pixbuf);
 
-    Effects::apply(image, effects);
+    EffectProcessor::apply(image, effects);
 
     this->signalProcessingChanged.emit();
 }

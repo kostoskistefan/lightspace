@@ -25,3 +25,8 @@ void Temperature::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Temperature::create()
+{
+    return std::make_unique<Temperature>();
+}

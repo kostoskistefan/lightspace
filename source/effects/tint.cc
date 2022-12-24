@@ -24,3 +24,8 @@ void Tint::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Tint::create()
+{
+    return std::make_unique<Tint>();
+}

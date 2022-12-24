@@ -32,3 +32,8 @@ void Saturation::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Saturation::create()
+{
+    return std::make_unique<Saturation>();
+}

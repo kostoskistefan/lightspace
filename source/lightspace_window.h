@@ -10,7 +10,7 @@
 #include <gtkmm/togglebutton.h>
 #include <gtkmm/applicationwindow.h>
 #include "file_dialog.h"
-#include "image_processor.h"
+#include "processors/image_processor.h"
 #include "widgets/histogram.h"
 
 /**

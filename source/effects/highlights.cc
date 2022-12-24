@@ -51,3 +51,8 @@ void Highlights::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Highlights::create()
+{
+    return std::make_unique<Highlights>();
+}

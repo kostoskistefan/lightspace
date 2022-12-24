@@ -1,9 +1,9 @@
 #include "effects_parser.h"
 #include "../utilities.h"
 
-std::vector<effect_t> EffectsParser::parse(std::string text)
+std::vector<std::pair<std::string, double>> EffectsParser::parse(std::string text)
 {
-    std::vector<effect_t> effects;
+    std::vector<std::pair<std::string, double>> effects;
 
     for (auto line : Utilities::split(text, '\n'))
     {
@@ -16,12 +16,10 @@ std::vector<effect_t> EffectsParser::parse(std::string text)
         auto amount = Utilities::trim(Utilities::lowercase(tokens[1]));
 
         try {
-            effects.push_back({ name, std::stod(amount) });
+            effects.emplace_back(name, std::stod(amount));
         } 
         
-        catch (...) {
-            effects.push_back({ name, 0 });
-        }
+        catch (...) {}
     }
 
     return effects;

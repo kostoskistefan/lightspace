@@ -51,3 +51,8 @@ void Shadows::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Shadows::create()
+{
+    return std::make_unique<Shadows>();
+}

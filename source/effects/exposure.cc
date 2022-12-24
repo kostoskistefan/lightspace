@@ -20,3 +20,8 @@ void Exposure::apply(Image &image, double amount)
         for (int x = 0; x < image.width; x++)
             image.at(x, y) *= amount;
 }
+
+std::unique_ptr<Effect> Exposure::create()
+{
+    return std::make_unique<Exposure>();
+}

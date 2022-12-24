@@ -34,3 +34,8 @@ void Blacks::apply(Image &image, double amount)
         }
     }
 }
+
+std::unique_ptr<Effect> Blacks::create()
+{
+    return std::make_unique<Blacks>();
+}

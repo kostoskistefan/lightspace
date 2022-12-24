@@ -2,7 +2,7 @@
 #define EFFECTS_PARSER_H
 
 #include <vector>
-#include "../types/effect.h"
+#include <string>
 
 /**
  * @namespace EffectsParser
@@ -15,7 +15,7 @@ namespace EffectsParser
      * @param text The text to parse.
      * @return A list of the parsed effects.
      */
-    std::vector<effect_t> parse(std::string text);
+    std::vector<std::pair<std::string, double>> parse(std::string text);
 }
 
 #endif // EFFECTS_PARSER_H

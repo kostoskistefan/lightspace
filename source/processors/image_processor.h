@@ -2,7 +2,7 @@
 #define IMAGE_PROCESSOR_H
 
 #include <gdkmm/pixbuf.h>
-#include "types/effect.h"
+#include "../effects/effect.h"
 
 /**
  * @class ImageProcessor
@@ -38,7 +38,7 @@ public:
      * @brief Apply the given effect to the image.
      * @param effect The list of effects to apply to the image.
      */
-    void process_image(std::vector<effect_t> effects);
+    void process_image(std::vector<std::pair<std::string, double>> &effects);
 
     /**
      * @brief Save the image to the given file path.
