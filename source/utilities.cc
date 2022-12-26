@@ -2,12 +2,6 @@
 #include <sstream>
 #include <algorithm>
 
-std::string Utilities::get_filename_from_path(const std::string &path)
-{
-    size_t lastSlash = path.find_last_of("/");
-    return path.substr(lastSlash + 1, path.back());
-}
-
 std::vector<std::string> Utilities::split(const std::string &str, char delimeter)
 {
     std::istringstream ss(str);

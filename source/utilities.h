@@ -31,14 +31,6 @@ namespace Utilities
      * @return A vector of strings (tokens).
      */
     std::vector<std::string> split(const std::string &str, char delimeter);
-
-    /**
-     * @brief Get a filename from a file path.
-     * @param path The path to get the filename from.
-     * @return The filename.
-     * @todo Handle paths on multiple platforms.
-     */
-    std::string get_filename_from_path(const std::string &path);
 }
 
 #endif // UTILITIES_H

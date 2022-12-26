@@ -8,7 +8,7 @@ SOURCE_FILES := $(shell find $(SOURCE_DIR) -name "*.cc")
 OBJECT_FILES := $(patsubst $(SOURCE_DIR)/%.cc, $(OBJECT_DIR)/%.o, $(SOURCE_FILES))
 
 CFLAGS := $(shell pkg-config --cflags --libs gtkmm-4.0)\
-		  -lm -fopenmp -Wall -Wextra -Werror -pedantic
+		  -lm -std=c++17 -fopenmp -Wall -Wextra -Werror -pedantic
 
 all: resources $(OBJECT_FILES) 
 	g++ -o $(TARGET) $(OBJECT_FILES) $(CFLAGS)

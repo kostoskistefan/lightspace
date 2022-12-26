@@ -1,6 +1,6 @@
 #include "lightspace_window.h"
-#include "utilities.h"
 #include "parsers/effects_parser.h"
+#include <filesystem>
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/eventcontrollerkey.h>
 
@@ -102,7 +102,7 @@ void LightspaceWindow::toggle_before_after()
 
 void LightspaceWindow::set_title_from_filepath(const std::string &path)
 {
-	this->set_title(Utilities::get_filename_from_path(path) + " - Lightspace");
+	this->set_title(std::filesystem::path(path).filename().string() + " - Lightspace");
 }
 
 void LightspaceWindow::on_file_dialog_success(std::string filePath, Gtk::FileChooser::Action action)
